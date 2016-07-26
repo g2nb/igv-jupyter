@@ -12,7 +12,7 @@ This extension can be installed through pip or conda.
 
 or 
 
-> conda install -c genepattern igv-jupyter
+> conda install -c igv igv-jupyter
 
 ## Enabling
 

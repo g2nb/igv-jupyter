@@ -36,5 +36,5 @@
 4. Build the package:
 > conda build igv
 5. Upload the newly built package:
-> anaconda upload /path/to/anaconda/conda-bld/osx-64/igv-<VERSION>-py35_0.tar.bz2 -u genepattern
+> anaconda upload /path/to/anaconda/conda-bld/osx-64/igv-<VERSION>-py35_0.tar.bz2 -u igv
 4. Log into the [Anaconda website](https://anaconda.org/) to make sure everything is good.
