@@ -97,7 +97,7 @@ class Track(IGVBase):
     sampling_window_size = None
     sampling_depth = None
     # max_rows = None
-    filter = None  # Alignment filter objects not yet supported
+    filter = None
 
     # Options for type = "alignment" && source_type = "ga4gh"
     # url = None
