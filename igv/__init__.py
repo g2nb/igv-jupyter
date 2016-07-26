@@ -8,6 +8,9 @@ from IPython.display import HTML
 import random
 import json
 
+# Constant for JavaScript's Number.MAX_VALUE
+MAX_VALUE = 1.7976931348623157e+308
+
 
 class IGVBase:
     """
@@ -50,6 +53,7 @@ class Track(IGVBase):
     """
     This class represents a track in IGV.js
     """
+
     # Options for all track types
     type = None
     source_type = 'file'
