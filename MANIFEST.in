@@ -1,0 +1,7 @@
+include igv/static/*
+include igv/static/igvjs/*
+recursive-include igv/static *.js
+recursive-include igv/static *.css
+recursive-include igv/static *.png
+recursive-include igv/static *.svg
+recursive-include igv/static *.map
