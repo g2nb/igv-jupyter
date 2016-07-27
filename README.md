@@ -25,4 +25,15 @@ This extension can be enabled in Jupyter Notebook by running the following on th
 ## Using the extension
 
 This extension consists of a Python package that wraps IGV.js functionality and an nbextension that's used for rendering 
-IGV.js when it is displayed in a notebook.
+IGV.js when it is displayed in a notebook. Once the extension is installed and enabled, it can be used by importing IGV 
+and associated classes, then returning them in a cell. Example code:
+
+```python
+from igv import IGV, Reference, Track
+
+IGV(locus="chr1:155,160,475-155,184,282", reference=Reference(id="hg19"), tracks=[Track(
+    name="Genes", 
+    url="//s3.amazonaws.com/igv.broadinstitute.org/annotations/hg19/genes/gencode.v18.collapsed.bed",
+    index_url="//s3.amazonaws.com/igv.broadinstitute.org/annotations/hg19/genes/gencode.v18.collapsed.bed.idx", 
+    display_mode="EXPANDED")])
+```
