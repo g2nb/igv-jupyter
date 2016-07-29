@@ -8,11 +8,11 @@ It is based on the [Integrative Genomics Viewer (IGV)](http://igv.org/), and dev
 
 This extension can be installed through pip or conda.
 
-> pip install -i https://testpypi.python.org/pypi igv-jupyter
+> pip install -i https://testpypi.python.org/pypi igv
 
 or 
 
-> conda install -c igv igv-jupyter
+> conda install -c igv igv
 
 ## Enabling
 
