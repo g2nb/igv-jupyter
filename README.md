@@ -1,6 +1,6 @@
-# IGV.js Jupyter Extension
+# igv.js Jupyter Extension
 
-This is an extension for [Jupyter Notebook](http://jupyter.org/) which integrates [IGV.js](http://igv.org/doc/doc.html), 
+This is an extension for [Jupyter Notebook](http://jupyter.org/) which integrates [igv.js](http://igv.org/doc/doc.html), 
 an embeddable interactive genome visualization component written in JavaScript and CSS. 
 It is based on the [Integrative Genomics Viewer (IGV)](http://igv.org/), and developed by the same team. 
 
@@ -24,8 +24,8 @@ This extension can be enabled in Jupyter Notebook by running the following on th
 
 ## Using the extension
 
-This extension consists of a Python package that wraps IGV.js functionality and an nbextension that's used for rendering 
-IGV.js when it is displayed in a notebook. Once the extension is installed and enabled, it can be used by importing IGV 
+This extension consists of a Python package that wraps igv.js functionality and an nbextension that's used for rendering 
+igv.js when it is displayed in a notebook. Once the extension is installed and enabled, it can be used by importing IGV 
 and associated classes, then returning them in a cell. Example code:
 
 ```python
