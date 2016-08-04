@@ -37,3 +37,11 @@ IGV(locus="chr1:155,160,475-155,184,282", reference=Reference(id="hg19"), tracks
     index_url="//s3.amazonaws.com/igv.broadinstitute.org/annotations/hg19/genes/gencode.v18.collapsed.bed.idx", 
     display_mode="EXPANDED")])
 ```
+
+### Troubleshooting
+
+> error: can't copy 'igv/static/igvjs/img': doesn't exist or not a regular file
+
+If you see the above error when trying to install through PIP, you may be experiencing a known issue with Python 2.7.6.
+To get around this error we recommend either updating your system's version of Python or simply installing through the 
+conda package manager (described above).
