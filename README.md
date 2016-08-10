@@ -8,7 +8,7 @@ It is based on the [Integrative Genomics Viewer (IGV)](http://igv.org/), and dev
 
 This extension can be installed through pip or conda.
 
-> pip install -i https://testpypi.python.org/pypi igv
+> pip install igv
 
 or 
 
