@@ -1,6 +1,6 @@
 __author__ = 'Jim Robinson, Thorin Tabor'
 __copyright__ = 'Copyright 2016, Broad Institute'
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 __status__ = 'Beta'
 __license__ = 'MIT'
 

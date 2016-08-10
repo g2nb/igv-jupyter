@@ -2,13 +2,13 @@ from distutils.core import setup
 
 setup(name='igv',
       packages=['igv'],
-      version='0.1.0',
+      version='0.1.1',
       description='Jupyter extension for embedding igv.js in a notebook',
       license='MIT',
       author='Jim Robinson, Thorin Tabor',
       author_email='igv-team@broadinstitute.org',
       url='https://github.com/igvteam/igv.js-jupyter',
-      download_url='https://github.com/igvteam/igv.js-jupyter/archive/0.1.0.tar.gz',
+      download_url='https://github.com/igvteam/igv.js-jupyter/archive/0.1.1.tar.gz',
       keywords=['igv', 'visualization', 'ipython', 'jupyter'],
       classifiers=[
           'Development Status :: 4 - Beta',
