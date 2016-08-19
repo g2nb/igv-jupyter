@@ -11,11 +11,11 @@ define([
      * @returns {boolean}
      */
     function is_css_loaded() {
-        return $("link[href='" + IGV_PATH + "/igvjs/igv-1.0.1.css']").length > 0;
+        return $("link[href='" + IGV_PATH + "igvjs/igv-1.0.1.css']").length > 0;
     }
 
     function load_css() {
-        $("head").append('<link rel="stylesheet" type="text/css" href="' + IGV_PATH + '/igvjs/igv-1.0.1.css">');
+        $("head").append('<link rel="stylesheet" type="text/css" href="' + IGV_PATH + 'igvjs/igv-1.0.1.css">');
     }
 
     /**
