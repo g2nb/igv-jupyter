@@ -8,3 +8,6 @@ compiler.xml
 /examples/.ipynb_checkpoints/API Example-checkpoint.ipynb
 /igv/__pycache__/__init__.cpython-35.pyc
 dugla-checkpoint.ipynb
+.DS_Store
+BAM Example-checkpoint.ipynb
+Copy Number Example-checkpoint.ipynb
