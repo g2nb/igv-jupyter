@@ -1,4 +1,10 @@
-/.idea
-/examples/.DS_Store
-/examples/.ipynb_checkpoints
-/igv/__pycache__
+copyright
+compiler.xml
+/.idea/igv.js-jupyter.iml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/vcs.xml
+/.idea/workspace.xml
+/examples/.ipynb_checkpoints/API Example-checkpoint.ipynb
+/igv/__pycache__/__init__.cpython-35.pyc
+dugla-checkpoint.ipynb
