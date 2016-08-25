@@ -226,9 +226,9 @@ class IGV(IGVBase):
             """ % str(track))
 
     @staticmethod
-    def search_tracks(search_str):
+    def goto(search_str):
         """Search the tracks using a webservice via IGV.js' search() API call"""
-        print("Searching tracks in IGV.js")
+        print("Goto track location ")
         return HTML("""
             <script type="text/javascript">
                 require([location.origin + Jupyter.contents.base_url + "nbextensions/igv/igv-jupyter.js"], function() {
