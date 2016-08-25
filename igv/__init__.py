@@ -1,6 +1,6 @@
-__author__ = 'Jim Robinson, Thorin Tabor'
+__author__ = 'Jim Robinson, Thorin Tabor, Douglass Turner'
 __copyright__ = 'Copyright 2016, Broad Institute'
-__version__ = '0.1.1'
+__version__ = '0.2.0'
 __status__ = 'Beta'
 __license__ = 'MIT'
 
