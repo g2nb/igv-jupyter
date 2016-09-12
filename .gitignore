@@ -12,3 +12,5 @@ dugla-checkpoint.ipynb
 BAM Example-checkpoint.ipynb
 Copy Number Example-checkpoint.ipynb
 /examples/.ipynb_checkpoints/local-seg-checkpoint.ipynb
+/.idea
+/examples/.ipynb_checkpoints
