@@ -4,18 +4,18 @@ var IGV_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/igv/"
 define([
     "base/js/namespace",
     "jquery",
-    IGV_PATH + "igvjs/igv-1.0.2.min.js"], function(Jupyter) {
+    IGV_PATH + "igvjs/igv-1.0.4.min.js"], function(Jupyter) {
 
     /**
      * Determines if the CSS file has been added to the head yet
      * @returns {boolean}
      */
     function is_css_loaded() {
-        return $("link[href='" + IGV_PATH + "igvjs/igv-1.0.2.css']").length > 0;
+        return $("link[href='" + IGV_PATH + "igvjs/igv-1.0.4.css']").length > 0;
     }
 
     function load_css() {
-        $("head").append('<link rel="stylesheet" type="text/css" href="' + IGV_PATH + 'igvjs/igv-1.0.2.css">');
+        $("head").append('<link rel="stylesheet" type="text/css" href="' + IGV_PATH + 'igvjs/igv-1.0.4.css">');
     }
 
     /**
