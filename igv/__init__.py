@@ -196,9 +196,9 @@ class IGV(IGVBase):
         if self.search is not None:
             obj['search'] = self.search.create_map()
         if self.api_key is not None:
-            obj['api_key'] = self.api_key
+            obj['apiKey'] = self.api_key
         if self.double_click_delay is not None:
-            obj['double_click_delay'] = self.double_click_delay
+            obj['doubleClickDelay'] = self.double_click_delay
         return obj
 
     def display(self):
