@@ -1,6 +1,6 @@
-__author__ = 'Jim Robinson, Thorin Tabor'
+__author__ = 'Jim Robinson, Thorin Tabor, Douglass Turner'
 __copyright__ = 'Copyright 2016, Broad Institute'
-__version__ = '0.1.1'
+__version__ = '0.2.0'
 __status__ = 'Beta'
 __license__ = 'MIT'
 
@@ -226,9 +226,9 @@ class IGV(IGVBase):
             """ % str(track))
 
     @staticmethod
-    def search_tracks(search_str):
+    def goto(search_str):
         """Search the tracks using a webservice via IGV.js' search() API call"""
-        print("Searching tracks in IGV.js")
+        print("Goto track location ")
         return HTML("""
             <script type="text/javascript">
                 require([location.origin + Jupyter.contents.base_url + "nbextensions/igv/igv-jupyter.js"], function() {
