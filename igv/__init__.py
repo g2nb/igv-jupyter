@@ -154,6 +154,9 @@ class IGV(IGVBase):
     search = None
     api_key = None
     double_click_delay = 500
+    hide_ideogram = False
+    show_cursor_tracking_guide = True
+    show_center_guide = True
 
     def __init__(self, **kwargs):
         for key, value in kwargs.items():
@@ -199,6 +202,12 @@ class IGV(IGVBase):
             obj['apiKey'] = self.api_key
         if self.double_click_delay is not None:
             obj['doubleClickDelay'] = self.double_click_delay
+        if self.hide_ideogram is not None:
+            obj['hideIdeogram'] = self.hide_ideogram
+        if self.show_cursor_tracking_guide is not None:
+            obj['showCursorTrackingGuide'] = self.show_cursor_tracking_guide
+        if self.show_center_guide is not None:
+            obj['showCenterGuide'] = self.show_center_guide
         return obj
 
     def display(self):
