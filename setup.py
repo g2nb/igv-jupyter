@@ -8,7 +8,7 @@ setup(name='igv',
       author='Jim Robinson, Thorin Tabor, Douglass Turner',
       author_email='igv-team@broadinstitute.org',
       url='https://github.com/igvteam/igv.js-jupyter',
-      download_url='https://github.com/igvteam/igv.js-jupyter/archive/0.1.1.tar.gz',
+      download_url='https://github.com/igvteam/igv.js-jupyter/archive/0.2.0.tar.gz',
       keywords=['igv', 'visualization', 'ipython', 'jupyter'],
       classifiers=[
           'Development Status :: 4 - Beta',
