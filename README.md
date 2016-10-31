@@ -40,7 +40,7 @@ IGV(locus="chr1:155,160,475-155,184,282", reference=Reference(id="hg19"), tracks
 
 ## Server
 
-If using the built-in Jupyter webserver take note of the "Range" header requirements desribed here: [Server Requirements](https://github.com/igvteam/igv.js/wiki/Server-Requirements).
+If using the built-in Jupyter webserver take note of the "Range" header requirements desribed here: [Server Requirements](https://github.com/igvteam/igv.js/wiki/Data-Server-Requirements).
 In general you will be restricted to serving non-indexed annotation (bed, gff) and wig files from the Jupyter web server.
 
 ### Troubleshooting
