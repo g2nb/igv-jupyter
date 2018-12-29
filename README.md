@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 # igv.js Jupyter Extension
 
 This is an extension for [Jupyter Notebook](http://jupyter.org/) which integrates [igv.js](http://igv.org/doc/doc.html), 
@@ -50,3 +57,14 @@ In general you will be restricted to serving non-indexed annotation (bed, gff) a
 If you see the above error when trying to install through PIP, you may be experiencing a known issue with Python 2.7.6.
 To get around this error we recommend either updating your system's version of Python or simply installing through the 
 conda package manager (described above).
+
+
+## Development
+
+```
+python setup.py build
+pip install -e .
+jupyter nbextension install --py igv
+jupyter nbextension enable --py igv
+
+```

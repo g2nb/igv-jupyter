@@ -4,12 +4,13 @@ __version__ = '0.2.1'
 __status__ = 'Beta'
 __license__ = 'MIT'
 
-from IPython.display import HTML
+from IPython.display import HTML, Javascript
 import random
 import json
 
 # Constant for JavaScript's Number.MAX_VALUE
-MAX_VALUE = 1.7976931348623157e+308
+# MAX_VALUE = 1.7976931348623157e+308
+#
 
 
 class IGVBase:
@@ -217,7 +218,11 @@ class IGV(IGVBase):
             <script type="text/javascript">
                 require([location.origin + Jupyter.contents.base_url + "nbextensions/igv/igv-jupyter.js"], function() {
                     var div = $("#%s.igv-js")[0], options = %s;
-                    igv.createBrowser(div, options);
+                    return igv.createBrowser(div, options)
+                       .then(function (b) {
+                          igv.browser = b
+                          return b
+                        });
                 });
             </script>
             """ % (self.igv_id, self.igv_id, self))
@@ -226,36 +231,31 @@ class IGV(IGVBase):
     def load_track(track):
         """Dynamically add a track using IGV.js' loadTrack() API call"""
         print("Loading track into IGV.js")
-        return HTML("""
-            <script type="text/javascript">
+        return Javascript("""
                 require([location.origin + Jupyter.contents.base_url + "nbextensions/igv/igv-jupyter.js"], function() {
                     igv.browser.loadTrack(%s);
                 });
-            </script>
             """ % str(track))
 
     @staticmethod
     def goto(search_str):
         """Search the tracks using a webservice via IGV.js' search() API call"""
-        print("Goto track location ")
-        return HTML("""
-            <script type="text/javascript">
+        print("Goto track location JS")
+        my_comm.send({'goto'})
+        return Javascript("""
                 require([location.origin + Jupyter.contents.base_url + "nbextensions/igv/igv-jupyter.js"], function() {
                     igv.browser.search("%s");
                 });
-            </script>
             """ % search_str)
 
     @staticmethod
     def zoom_in():
         """Zoom in by a factor of 2 using IGV.js' zoomIn() API call"""
         print("Zooming in with IGV.js")
-        return HTML("""
-            <script type="text/javascript">
+        return Javascript("""
                 require([location.origin + Jupyter.contents.base_url + "nbextensions/igv/igv-jupyter.js"], function() {
                     igv.browser.zoomIn();
                 });
-            </script>
             """)
 
     @staticmethod
@@ -263,11 +263,9 @@ class IGV(IGVBase):
         """Zoom out by a factor of 2 using IGV.js' zoomIn() API call"""
         print("Zooming out with IGV.js")
         return HTML("""
-            <script type="text/javascript">
                 require([location.origin + Jupyter.contents.base_url + "nbextensions/igv/igv-jupyter.js"], function() {
                     igv.browser.zoomOut();
                 });
-            </script>
             """)
 
 
@@ -285,11 +283,11 @@ def _jupyter_server_extension_paths():
 def _jupyter_nbextension_paths():
     return [dict(
         section="notebook",
-        # the path is relative to the `my_fancy_module` directory
+        # the path is relative to the `igv` directory
         src="static",
         # directory in the `nbextension/` namespace
         dest="igv",
-        # _also_ in the `nbextension/` namespace
+        # also_ in the `nbextension/` namespace
         require="igv/igv-jupyter")]
 
 
