@@ -216,7 +216,7 @@ class IGV(IGVBase):
         return HTML("""
             <div id="%s" class="igv-js"></div>
             <script type="text/javascript">
-                require([location.origin + Jupyter.contents.base_url + "nbextensions/igv/igv-jupyter.js"], function() {
+                require([location.origin + Jupyter.contents.base_url + "nbextensions/igv/extension.js"], function() {
                     var div = $("#%s.igv-js")[0], options = %s;
                     return igv.createBrowser(div, options)
                        .then(function (b) {
@@ -232,7 +232,7 @@ class IGV(IGVBase):
         """Dynamically add a track using IGV.js' loadTrack() API call"""
         print("Loading track into IGV.js")
         return Javascript("""
-                require([location.origin + Jupyter.contents.base_url + "nbextensions/igv/igv-jupyter.js"], function() {
+                require([location.origin + Jupyter.contents.base_url + "nbextensions/igv/extension.js"], function() {
                     igv.browser.loadTrack(%s);
                 });
             """ % str(track))
@@ -243,7 +243,7 @@ class IGV(IGVBase):
         print("Goto track location JS")
         my_comm.send({'goto'})
         return Javascript("""
-                require([location.origin + Jupyter.contents.base_url + "nbextensions/igv/igv-jupyter.js"], function() {
+                require([location.origin + Jupyter.contents.base_url + "nbextensions/igv/extension.js"], function() {
                     igv.browser.search("%s");
                 });
             """ % search_str)
@@ -253,7 +253,7 @@ class IGV(IGVBase):
         """Zoom in by a factor of 2 using IGV.js' zoomIn() API call"""
         print("Zooming in with IGV.js")
         return Javascript("""
-                require([location.origin + Jupyter.contents.base_url + "nbextensions/igv/igv-jupyter.js"], function() {
+                require([location.origin + Jupyter.contents.base_url + "nbextensions/igv/extension.js"], function() {
                     igv.browser.zoomIn();
                 });
             """)
@@ -263,7 +263,7 @@ class IGV(IGVBase):
         """Zoom out by a factor of 2 using IGV.js' zoomIn() API call"""
         print("Zooming out with IGV.js")
         return HTML("""
-                require([location.origin + Jupyter.contents.base_url + "nbextensions/igv/igv-jupyter.js"], function() {
+                require([location.origin + Jupyter.contents.base_url + "nbextensions/igv/extension.js"], function() {
                     igv.browser.zoomOut();
                 });
             """)
@@ -288,7 +288,7 @@ def _jupyter_nbextension_paths():
         # directory in the `nbextension/` namespace
         dest="igv",
         # also_ in the `nbextension/` namespace
-        require="igv/igv-jupyter")]
+        require="igv/extension")]
 
 
 def load_jupyter_server_extension(nbapp):

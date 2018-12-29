@@ -2,7 +2,7 @@
 var IGV_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/igv/";
 console.log(IGV_PATH)
 define(
-    ["./igvjs/igv.min"],
+    ["./igvjs/igv.min.js"],
     function (igv) {
 
         /**
@@ -15,6 +15,7 @@ define(
         function createBrowser(div, config) {
             console.log("igv=" + igv);
 
+            // TODO -- send message that browser is ready
             return igv.createBrowser(div, config)
         }
 

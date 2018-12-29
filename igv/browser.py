@@ -19,7 +19,7 @@ class Browser:
         return HTML("""
             <div id="%s" class="igv-js"></div>
             <script type="text/javascript">
-                require([location.origin + Jupyter.contents.base_url + "nbextensions/igv/igv-jupyter.js"], function(igvjupyter) {
+                require([location.origin + Jupyter.contents.base_url + "nbextensions/igv/extension.js"], function(igvjupyter) {
                     var div = $("#%s.igv-js")[0], options = %s;
                     return igvjupyter.createBrowser(div, options)
                        .then(function (b) {
@@ -32,6 +32,11 @@ class Browser:
 
     def search(self, locus):
         return Javascript("igv.browser.search(\"" + locus + "\")")
+
+    def load_track(self, track):
+
+        j = json.dumps(track)
+        return Javascript("igv.browser.loadTrack(" + j + ")")
 
 
     def _gen_id(self):

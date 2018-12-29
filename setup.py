@@ -22,5 +22,5 @@ setup(name='igv',
           'jupyter',
           'notebook>=4.2.0',
       ],
-      package_data={'igv': ['static/igv-jupyter.js', 'static/igvjs/*']},
+      package_data={'igv': ['static/extension.js', 'static/igvjs/*']},
       )
