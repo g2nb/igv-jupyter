@@ -2,8 +2,10 @@
 var IGV_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/igv/";
 console.log(IGV_PATH)
 define(
-    ["./igvjs/igv.min.js"],
+    [IGV_PATH + "igvjs/igv.min.js"],
     function (igv) {
+
+        var browserCache = {}
 
         /**
          * Load the IGV.js nbextension
@@ -14,14 +16,22 @@ define(
 
         function createBrowser(div, config) {
             console.log("igv=" + igv);
-
+console.log("window.igv= " + window.igv)
             // TODO -- send message that browser is ready
-            return igv.createBrowser(div, config)
+            igv.createBrowser(div, config)
+                .then(function (browser) {
+                    browserCache[config.id] = browser;
+                })
+        }
+
+        function getBrowser(id) {
+            return browserCache[id]
         }
 
         return {
             load_ipython_extension: load_ipython_extension,
-            createBrowser: createBrowser
+            createBrowser: createBrowser,
+            getBrowser: getBrowser
         };
 
     });
