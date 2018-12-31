@@ -1,6 +1,7 @@
-from IPython.display import HTML, Javascript
+from IPython.display import HTML, display
 import json
 import random
+from .comm import IGVComm
 
 class Browser:
 
@@ -10,50 +11,62 @@ class Browser:
     # Always remember the *self* argument
     def __init__(self, config):
 
-        self.igv_id = self._gen_id()
+        id = self._gen_id()
+        config["id"] = id
+        self.igv_id = id
         self.config = config
-        config["id"] =self.igv_id
+        self.comm = IGVComm("igvcomm")
 
     def show_browser(self):
 
-        return HTML("""
-            <div id="%s" class="igv-js"></div>
-            <script type="text/javascript">
-                require([%s], function(igvjupyter) {
-                    var div = $("#%s.igv-js")[0], options = %s;
-                    return igvjupyter.createBrowser(div, options)
-                       .then(function (b) {
-                          return b
-                        });
-                });
-            </script>
-            """ % (self.igv_id, Browser.jsURL, self.igv_id, json.dumps(self.config)))
+        display(HTML("""<div id="%s" class="igv-js"></div>""" % (self.igv_id)))
+
+        msg = json.dumps({
+            "id": self.igv_id,
+            "command": "create",
+            "options": self.config
+        })
+        self.comm.send(msg)
+
 
     def search(self, locus):
-        return Javascript("""
-          %s
-          igvjupyter.getBrowser("%s").search("%s")
-        """ % (Browser.igvjupyter, self.igv_id, locus))
+        msg = json.dumps({
+            "id": self.igv_id,
+            "command": "search",
+            "locus": locus
+        })
+        self.comm.send(msg)
 
     def zoom_in(self):
-        return Javascript("""
-          %s
-          igvjupyter.getBrowser("%s").zoomIn()
-        """ % (Browser.igvjupyter, self.igv_id))
+        msg = json.dumps({
+            "id": self.igv_id,
+            "command": "zoomIn"
+        })
+        self.comm.send(msg)
 
     def zoom_out(self):
-        return Javascript("""
-          %s
-          igvjupyter.getBrowser("%s").zoomOut()
-        """ % (Browser.igvjupyter, self.igv_id))
+        msg = json.dumps({
+            "id": self.igv_id,
+            "command": "zoomOut"
+        })
+        self.comm.send(msg)
 
     def load_track(self, track):
+        msg = json.dumps({
+            "id": self.igv_id,
+            "command": "loadTrack",
+            "track": track
+        })
+        self.comm.send(msg)
 
-        j = json.dumps(track)
-        return Javascript("""
-            %s
-            igvjupyter.getBrowser("%s").loadTrack(%s)
-        """ % (Browser.igvjupyter, self.igv_id, j))
+    def remove(self):
+        msg = json.dumps({
+            "id": self.igv_id,
+            "command": "remove"
+        })
+        self.comm.send(msg)
+
+
 
     def dump_json(self):
         print(json.dumps(self.config))
