@@ -14,11 +14,14 @@ define(
             registerComm()
         }
 
-        function createBrowser(div, config) {
+        function createBrowser(div, config, comm) {
             // TODO -- send message that browser is ready
             igv.createBrowser(div, config)
                 .then(function (browser) {
                     igv.browserCache[config.id] = browser;
+                    if(comm) {
+                        comm.send('{"status": "ready"}')
+                    }
                 })
         }
 
@@ -27,7 +30,9 @@ define(
         }
 
         function registerComm() {
+
             Jupyter.notebook.kernel.comm_manager.register_target('igvcomm',
+
                 function(comm, msg) {
                     // comm is the frontend comm instance
                     // msg is the comm_open message, which can carry data
@@ -41,7 +46,7 @@ define(
 
                             case "create":
                                 var div = document.getElementById(id)
-                                createBrowser(div, data.options)
+                                createBrowser(div, data.options, comm)
 
                             case "zoomIn":
                                 getBrowser(id).zoomIn()
@@ -70,7 +75,6 @@ define(
                         }
                     });
                     comm.on_close(function(msg) {});
-                    comm.send({'foo': 0});
                 });
         }
 
