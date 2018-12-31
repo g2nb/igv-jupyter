@@ -1,5 +1,5 @@
 from .browser import Browser
-from .igv_comm import IGVComm
+from .comm import IGVComm
 
 def _jupyter_server_extension_paths():
     return [{

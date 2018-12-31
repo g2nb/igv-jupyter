@@ -5,8 +5,6 @@ from .comm import IGVComm
 
 
 class Browser:
-    jsURL = "location.origin + Jupyter.contents.base_url + \"nbextensions/igv/extension.js\""
-    igvjupyter = "var igvjupyter = require(" + jsURL + ")"
 
     # Always remember the *self* argument
     def __init__(self, config):
@@ -24,7 +22,7 @@ class Browser:
             if data['status']:
                 self.status = data['status']
 
-    def show_browser(self):
+    def show(self):
         display(HTML("""<div id="%s" class="igv-js"></div>""" % (self.igv_id)))
         # DON'T check status before showing browser,
         msg = json.dumps({

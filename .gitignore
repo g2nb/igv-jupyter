@@ -14,7 +14,6 @@ Copy Number Example-checkpoint.ipynb
 /examples/.ipynb_checkpoints/local-seg-checkpoint.ipynb
 /.idea
 /examples/.ipynb_checkpoints
-*.ipynb
 *.js-jupyter.iml
 /build/
 /.ipynb_checkpoints/

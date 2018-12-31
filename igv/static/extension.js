@@ -1,32 +1,19 @@
 // Add file path shim for Jupyter 3/4
-var IGV_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/igv/";
-console.log(IGV_PATH)
+//var IGV_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/igv/";
+//console.log(IGV_PATH)
 define(
-    [IGV_PATH + "igvjs/igv.min.js"],
+    ["/nbextensions/igv/igvjs/igv.min.js"],
     function (igv) {
 
-        if(!igv.browserCache) igv.browserCache = {}
+        if(!igv.browserCache) {
+            igv.browserCache = {}
+        }
 
         /**
          * Load the IGV.js nbextension
          */
         function load_ipython_extension() {
             registerComm()
-        }
-
-        function createBrowser(div, config, comm) {
-            // TODO -- send message that browser is ready
-            igv.createBrowser(div, config)
-                .then(function (browser) {
-                    igv.browserCache[config.id] = browser;
-                    if(comm) {
-                        comm.send('{"status": "ready"}')
-                    }
-                })
-        }
-
-        function getBrowser(id) {
-            return igv.browserCache[id]
         }
 
         function registerComm() {
@@ -73,6 +60,22 @@ define(
                             default:
                                 console.error("Unrecognized method: " + msg.method)
                         }
+
+                        function createBrowser(div, config, comm) {
+                            // TODO -- send message that browser is ready
+                            igv.createBrowser(div, config)
+                                .then(function (browser) {
+                                    igv.browserCache[config.id] = browser;
+                                    if(comm) {
+                                        comm.send('{"status": "ready"}')
+                                    }
+                                })
+                        }
+
+                        function getBrowser(id) {
+                            return igv.browserCache[id]
+                        }
+
                     });
                     comm.on_close(function(msg) {});
                 });
@@ -80,8 +83,6 @@ define(
 
         return {
             load_ipython_extension: load_ipython_extension,
-            createBrowser: createBrowser,
-            getBrowser: getBrowser
         };
 
     });
