@@ -13,7 +13,7 @@ This extension has not been released to pipy and can only be installed
 in development mode.  To install run the following from the project
 root folder.
 
-```
+```bash
 python setup.py build
 pip install -e .
 jupyter nbextension install --py igv
@@ -23,8 +23,10 @@ jupyter nbextension enable --py igv
 
 ## Usage
 
+### Initialization
+
 To insert an IGV instance into a cell:  (1) create an igv.Browser object,and (2) call showBrowser on the instance.
-The igv.Browser initializer takes a configuration object which is converted to json and passed to the igv.js
+The igv.Browser initializer takes a configuration object which is converted to JSON and passed to the igv.js
 createBrowser function.   The configuration object is described in the
 [igv.js documentation](https://github.com/igvteam/igv.js/wiki/Browser-Configuration-2.0).
 
@@ -56,13 +58,17 @@ To instantiate the client side IGV instance in a cell call show()
 b.show()
 ```
 
+### Tracks
+
 To load a track pass a track configuration object to load_track().  Track configuration
 objects are described in the [igv.js documentation](https://github.com/igvteam/igv.js/wiki/Tracks-2.0).
-The configuration object will be converted to json and passed to the igv.js browser
+The configuration object will be converted to JSON and passed to the igv.js browser
 instance.
 
 Data for the track can be loaded by URL or passed directly as an array of JSON objects.
 
+
+#### Remote URL
 
 ```python
 b.load_track(
@@ -75,6 +81,10 @@ b.load_track(
 
 ```
 
+#### Local File
+
+Tracks can be loaded from local files using the Jupyter web server by prepending "files" to the path.  The path
+is relative to the notebook file.  This method is 
 
 ```python
 b.load_track(
@@ -86,9 +96,10 @@ b.load_track(
         "indexed": False
     })
 ```
-Note: If using the built-in Jupyter webserver take note of the "Range" header
-requirements for indexed file formats desribed here: [Server Requirements](https://github.com/igvteam/igv.js/wiki/Data-Server-Requirements).
-In general you will be restricted to serving non-indexed annotation (bed, gff) and wig files from the Jupyter web server.
+
+#### Embedded Features
+
+Features can also be passed directly to tracks.
 
 ```python
 b.load_track({
