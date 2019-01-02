@@ -14,16 +14,25 @@ class Browser:
         self.config = config
         self.comm = IGVComm("igvcomm")
         self.status = "initializing"
+        self.locus = None
+        self.eventHandlers = {}
 
         # Add a callback for received messages.
         @self.comm.comm.on_msg
         def _recv(msg):
             data = json.loads(msg['content']['data'])
-            display(json.dumps(data))
+            print(json.dumps(data))
             if 'status' in data:
                 self.status = data['status']
             elif 'locus' in data:
                 self.locus = data['locus']
+            elif 'event' in data:
+                if data['event'] in self.eventHandlers:
+                    handler = self.eventHandlers[data['event']]
+                    eventData = None
+                    if 'data' in data:
+                        eventData = data['data']
+                    handler(eventData)
 
 
     def show(self):
@@ -60,6 +69,14 @@ class Browser:
             "id": self.igv_id,
             "command": "loadTrack",
             "track": track
+        })
+
+    def on(self, eventName, cb):
+        self.eventHandlers[eventName] = cb
+        return self._send({
+            "id": self.igv_id,
+            "command": "on",
+            "eventName": eventName
         })
 
     def remove(self):

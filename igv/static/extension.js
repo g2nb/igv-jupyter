@@ -1,10 +1,9 @@
-
 define(
     ["/nbextensions/igv/igvjs/igv.min.js"],
     //["https://cdn.jsdelivr.net/npm/igv@2.1.0/dist/igv.min.js"],
     function (igv) {
 
-        if(!igv.browserCache) {
+        if (!igv.browserCache) {
             igv.browserCache = {}
         }
 
@@ -19,16 +18,16 @@ define(
 
             Jupyter.notebook.kernel.comm_manager.register_target('igvcomm',
 
-                function(comm, msg) {
+                function (comm, msg) {
                     // comm is the frontend comm instance
                     // msg is the comm_open message, which can carry data
 
                     // Register handlers for later messages:
-                    comm.on_msg(function(msg) {
+                    comm.on_msg(function (msg) {
                         var data = JSON.parse(msg.content.data)
                         var method = data.command
                         var id = data.id
-                        switch(method) {
+                        switch (method) {
 
                             case "create":
                                 var div = document.getElementById(id)
@@ -56,6 +55,19 @@ define(
                                 div.parentNode.removeChild(div)
                                 break
 
+                            case "on":
+                                if ("locuschange" === data.eventName) {
+                                    getBrowser(id).on(data.eventName, function (referenceFrame) {
+                                        comm.send(JSON.stringify({
+                                            "event": data.eventName,
+                                            "data": referenceFrame
+                                        }))
+                                    })
+                                }
+                                else {
+                                    console.log("Unsupported event: " + data.eventName)
+                                }
+
                             default:
                                 console.error("Unrecognized method: " + msg.method)
                         }
@@ -65,7 +77,7 @@ define(
                             igv.createBrowser(div, config)
                                 .then(function (browser) {
                                     igv.browserCache[config.id] = browser;
-                                    if(comm) {
+                                    if (comm) {
                                         comm.send('{"status": "ready"}')
                                     }
 
@@ -81,7 +93,8 @@ define(
                         }
 
                     });
-                    comm.on_close(function(msg) {});
+                    comm.on_close(function (msg) {
+                    });
                 });
         }
 
