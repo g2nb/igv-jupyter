@@ -126,3 +126,51 @@ b.load_track({
     ]
 })
 ```
+
+### Navigation
+
+Zoom in by a factor of 2
+
+```python
+b.zoom_in()
+```
+
+Zoom out by a factor of 2
+
+```python
+b.zoom_out()
+```
+
+Jump to a specific locus
+
+```python
+b.search('chr1:3000-4000')
+
+```
+
+Jump to a specific gene.  This uses the IGV search web service, which currently supports a limited number of genomes:  hg38, hg19, and mm10.
+To configure a custom search service see the [igv.js documentation](https://github.com/igvteam/igv.js/wiki/Browser-Configuration-2.0#search-object-details)
+
+```python
+b.search('myc')
+
+```
+
+
+### Events
+
+**_Note: This is an experimental feature._**
+
+```python
+
+def locuschange(data):
+    b.locus = data
+
+b.on("locuschange", locuschange)
+
+b.zoom_in()
+
+return b.locus
+
+```
+
