@@ -1,8 +1,7 @@
-// Add file path shim for Jupyter 3/4
-//var IGV_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/igv/";
-//console.log(IGV_PATH)
+
 define(
     ["/nbextensions/igv/igvjs/igv.min.js"],
+    //["https://cdn.jsdelivr.net/npm/igv@2.1.0/dist/igv.min.js"],
     function (igv) {
 
         if(!igv.browserCache) {
