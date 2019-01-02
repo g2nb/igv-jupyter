@@ -68,6 +68,11 @@ define(
                                     if(comm) {
                                         comm.send('{"status": "ready"}')
                                     }
+
+                                    // Uncomment to send locus change events to server object (browser).  This generates a lot of traffic.
+                                    //browser.on('locuschange', function (referenceFrame) {
+                                    //    comm.send(JSON.stringify({"locus": referenceFrame}))
+                                    //});
                                 })
                         }
 

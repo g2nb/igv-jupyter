@@ -19,8 +19,12 @@ class Browser:
         @self.comm.comm.on_msg
         def _recv(msg):
             data = json.loads(msg['content']['data'])
-            if data['status']:
+            display(json.dumps(data))
+            if 'status' in data:
                 self.status = data['status']
+            elif 'locus' in data:
+                self.locus = data['locus']
+
 
     def show(self):
         display(HTML("""<div id="%s" class="igv-js"></div>""" % (self.igv_id)))
