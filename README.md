@@ -1,7 +1,7 @@
 # igv.js Jupyter Extension
 
 This is an extension for [Jupyter Notebook](http://jupyter.org/) which
-wraps igv.js [igv.js](https://github.com/igvteam/igv.js).  With this
+wraps [igv.js](https://github.com/igvteam/igv.js).  With this
 extension you can render igv.js in a cell and call its API from
 the notebook.
 
