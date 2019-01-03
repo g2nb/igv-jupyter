@@ -1,27 +1,33 @@
 # igv.js Jupyter Extension
 
-This is an extension for [Jupyter Notebook](http://jupyter.org/) which
+IGV is an extension for [Jupyter Notebook](http://jupyter.org/) which
 wraps [igv.js](https://github.com/igvteam/igv.js).  With this
 extension you can render igv.js in a cell and call its API from
-the notebook.
+the notebook. The extension exposes a python API that mimics the igv.js 
+Browser creation and control APIs.   Dictionaries are used for browser and track 
+configuration objects.   Track data can be loaded from local or remote 
+URLs,  or supplied directly as lists of objects.
 
-## Installation_
+## Installation
 
-Tested against Python 3.7.1 and Jupyter version 4.4.0. It will not work on Python 2.X.
+Requirements:
+* python >= 3.6.4
+* jupyter >= 4.2.0
 
-This extension has not been released to pipy and can only be installed
-in development mode.  To install run the following from the project
-root folder.
 
 ```bash
-python setup.py build
-pip install -e .
-jupyter nbextension install --py igv
-jupyter nbextension enable --py igv
-
+pip install igv
 ```
 
 ## Usage
+
+### Examples
+
+Example notebooks are available in the github repository.   To download without cloning the repository use 
+this [link](https://github.com/igvteam/igv.js-jupyter/archive/master.zip).   Notebooks are available in the
+"examples" directory.
+
+
 
 ### Initialization
 
@@ -34,20 +40,7 @@ Example:
 ```python
 import igv
 
-b = igv.Browser(
-    {"reference": {
-        "id": "hg19",
-        "fastaURL": "files/data/hg19.snippet.fasta",
-        "indexed": False,
-        "cytobandURL": "files/data/cytoband.hg19.snippet.txt",
-        "tracks": [
-            {
-                "name": "RefGene",
-                "url": "files/data/refgene.hg19.snippet.bed"
-            }
-        ]
-    }}
-)
+b = igv.Browser({"genome": "hg19"})
 ```
 
 The igv.Browser initializer takes a configuration object which is converted to JSON and passed to the igv.js
@@ -88,7 +81,7 @@ b.load_track(
 #### Local File
 
 Tracks can be loaded from local files using the Jupyter web server by prepending "files" to the path.  The path
-is relative to the notebook file.  This method is 
+is relative to the notebook file.  
 
 ```python
 b.load_track(
@@ -178,3 +171,14 @@ return b.locus
 
 ```
 
+#### Development
+
+To build and install from source:
+
+```bash
+python setup.py build
+pip install -e .
+jupyter nbextension install --py igv
+jupyter nbextension enable --py igv
+
+```

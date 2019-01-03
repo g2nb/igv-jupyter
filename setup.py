@@ -1,26 +1,26 @@
-from distutils.core import setup
+import setuptools
 
-setup(name='igv',
-      packages=['igv'],
-      version='0.9',
-      description='Jupyter extension for embedding igv.js in a notebook',
-      license='MIT',
-      author='Jim Robinson',
-      #author_email='igv-team@broadinstitute.org',
-      url='https://github.com/igvteam/igv.js-jupyter',
-      #download_url='https://github.com/igvteam/igv.js-jupyter/archive/0.2.1.tar.gz',
-      keywords=['igv', 'visualization', 'ipython', 'jupyter'],
-      classifiers=[
-          'Development Status :: 4 - Beta',
-          'Intended Audience :: Science/Research',
-          'Intended Audience :: Developers',
-          'License :: OSI Approved :: MIT License',
-          'Programming Language :: Python',
-          'Framework :: IPython',
-      ],
-      install_requires=[
-          'jupyter',
-          'notebook>=4.2.0',
-      ],
-      package_data={'igv': ['static/extension.js', 'static/igvjs/*']},
-      )
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
+setuptools.setup(name='igv',
+                 packages=['igv'],
+                 version='0.9.1',
+                 description='Jupyter extension for embedding the genome visualation igv.js in a notebook',
+                 long_description=long_description,
+                 long_description_content_type="text/markdown",
+                 license='MIT',
+                 author='Jim Robinson',
+                 url='https://github.com/igvteam/igv.js-jupyter',
+                 # download_url='https://github.com/igvteam/igv.js-jupyter/archive/0.2.1.tar.gz',
+                 keywords=['igv', 'bioinformatics', 'genomics', 'visualization', 'ipython', 'jupyter'],
+                 classifiers=[
+                     'Development Status :: 4 - Beta',
+                     'Intended Audience :: Science/Research',
+                     'Intended Audience :: Developers',
+                     'License :: OSI Approved :: MIT License',
+                     'Programming Language :: Python',
+                     'Framework :: IPython',
+                 ],
+                 package_data={'igv': ['static/extension.js', 'static/igvjs/*']},
+                 )
