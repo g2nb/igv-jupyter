@@ -25,11 +25,11 @@ jupyter nbextension enable --py igv
 
 ### Initialization
 
-To insert an IGV instance into a cell:  (1) create an igv.Browser object,and (2) call showBrowser on the instance.
-The igv.Browser initializer takes a configuration object which is converted to JSON and passed to the igv.js
-createBrowser function.   The configuration object is described in the
-[igv.js documentation](https://github.com/igvteam/igv.js/wiki/Browser-Configuration-2.0).
+To insert an IGV instance into a cell:  
 
+(1) create an igv.Browser object,and (2) call showBrowser on the instance.
+
+Example:
 
 ```python
 import igv
@@ -49,6 +49,10 @@ b = igv.Browser(
     }}
 )
 ```
+
+The igv.Browser initializer takes a configuration object which is converted to JSON and passed to the igv.js
+createBrowser function.   The configuration object is described in the
+[igv.js documentation](https://github.com/igvteam/igv.js/wiki/Browser-Configuration-2.0).
 
 
 To instantiate the client side IGV instance in a cell call show()
