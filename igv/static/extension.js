@@ -32,6 +32,7 @@ define(
                             case "create":
                                 var div = document.getElementById(id)
                                 createBrowser(div, data.options, comm)
+                                break
 
                             case "zoomIn":
                                 getBrowser(id).zoomIn()
@@ -67,6 +68,7 @@ define(
                                 else {
                                     console.log("Unsupported event: " + data.eventName)
                                 }
+                                break
 
                             default:
                                 console.error("Unrecognized method: " + msg.method)

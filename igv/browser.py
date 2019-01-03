@@ -1,26 +1,36 @@
 from IPython.display import HTML, display
+from ipykernel.comm import Comm
 import json
 import random
-from .comm import IGVComm
+
+class _IGVComm:
+
+    def __init__(self, id):
+
+        # Use comm to send a message from the kernel
+        self.comm = Comm(target_name=id, data={})
+
+    def send(self, message):
+        self.comm.send(message)
 
 
 class Browser:
 
     # Always remember the *self* argument
     def __init__(self, config):
-        """Initialize an igv Browser object.  See https://github.com/igvteam/igv.js/wiki/Browser-Configuration-2.0
-        for configuration options.
+        """Initialize an igv Browser object.
 
         Arguments:
             config: A dictionary specifying the browser configuration.  This will be converted to JSON and passed
-                    to igv.js  "igv.createBrowser(config)" as described in the igv.js documentation.
+                    to igv.js  "igv.createBrowser(config)" as described in the igv.js documentation. See
+                    https://github.com/igvteam/igv.js/wiki/Browser-Configuration-2.0 for configuration options.
         """
 
         id = self._gen_id()
         config["id"] = id
         self.igv_id = id
         self.config = config
-        self.comm = IGVComm("igvcomm")
+        self.comm = _IGVComm("igvcomm")
         self.status = "initializing"
         self.locus = None
         self.eventHandlers = {}
@@ -59,7 +69,9 @@ class Browser:
     def search(self, locus):
         """
         Go to the specified locus.
-        :param locus: String of the form  "chromsosome:start-end", or for supported genomes a gene name.
+
+        Arguments:
+             locus: String of the form  "chromsosome:start-end", or for supported genomes (hg38, hg19, and mm10) a gene name.
         """
 
         return self._send({
@@ -72,6 +84,7 @@ class Browser:
         """
         Zoom in by a factor of 2
         """
+
         return self._send({
             "id": self.igv_id,
             "command": "zoomIn"
@@ -89,7 +102,9 @@ class Browser:
     def load_track(self, track):
         """
         Load a track.  Corresponds to the igv.js Browser function loadTrack (see https://github.com/igvteam/igv.js/wiki/Browser-Control-2.0#loadtrack).
-        :param track: A dictionary specifying track options.  See https://github.com/igvteam/igv.js/wiki/Tracks-2.0.
+
+        Arguments:
+             track: A dictionary specifying track options.  See https://github.com/igvteam/igv.js/wiki/Tracks-2.0.
         """
         return self._send({
             "id": self.igv_id,
@@ -100,9 +115,11 @@ class Browser:
     def on(self, eventName, cb):
         """
         Subscribe to an igv.js event.
-        :param eventName: Name of the event.  Currently only "locuschange" is supported.
-        :param cb: A callback function taking a single argument.  For the locuschange event this argument will contain
-                   a dictionary of the form  {chr, start, end}
+
+        Arguments:
+            eventName: Name of the event.  Currently only "locuschange" is supported.
+            cb: A callback function taking a single argument.  For the locuschange event this argument will contain
+                a dictionary of the form  {chr, start, end}
         """
         self.eventHandlers[eventName] = cb
         return self._send({
