@@ -1,4 +1,4 @@
-from IPython.display import HTML, display
+from IPython.display import HTML, SVG, display
 from ipykernel.comm import Comm
 import json
 import random
@@ -34,6 +34,7 @@ class Browser:
         self.status = "initializing"
         self.locus = None
         self.eventHandlers = {}
+        self.svg = None
 
         # Add a callback for received messages.
         @self.comm.comm.on_msg
@@ -44,6 +45,9 @@ class Browser:
                 self.status = data['status']
             elif 'locus' in data:
                 self.locus = data['locus']
+            elif 'svg' in data:
+                self.svg = data['svg']
+                display(SVG(self.svg))
             elif 'event' in data:
                 if data['event'] in self.eventHandlers:
                     handler = self.eventHandlers[data['event']]
@@ -57,7 +61,7 @@ class Browser:
         """
         Create an igv.js "Browser" instance on the front end.
         """
-        display(HTML("""<div id="%s" class="igv-js"></div>""" % (self.igv_id)))
+        display(HTML("""<div id="%s"></div>""" % (self.igv_id)))
         # DON'T check status before showing browser,
         msg = json.dumps({
             "id": self.igv_id,
@@ -112,6 +116,24 @@ class Browser:
             "track": track
         })
 
+    def get_svg(self):
+        """
+        Fetch the current IGV view as an SVG image.  To display the message call display_svg()
+        """
+        return self._send({
+            "id": self.igv_id,
+            "command": "toSVG"
+        })
+
+    def display_svg(self):
+        """
+        Display the current SVG image.  You must call get_svg() before calling this method.
+        """
+        if self.svg == None:
+            return 'Must call get_svg() before displaying'
+        else:
+            display(SVG(self.svg))
+
     def on(self, eventName, cb):
         """
         Subscribe to an igv.js event.
@@ -130,7 +152,7 @@ class Browser:
 
     def remove(self):
         """
-        Remove the igv.js Browser instance from the front end.  The browser object should be disposed of after calling
+        Remove the igv.js Browser instance from the front end.  The server Browser object should be disposed of after calling
         this method.
         """
         return self._send({

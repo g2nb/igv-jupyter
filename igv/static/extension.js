@@ -56,6 +56,13 @@ define(
                                 div.parentNode.removeChild(div)
                                 break
 
+                            case "toSVG":
+                                var svg = getBrowser(id).toSVG()
+                                comm.send(JSON.stringify({
+                                    "svg": svg
+                                }))
+                                break;
+
                             case "on":
                                 if ("locuschange" === data.eventName) {
                                     getBrowser(id).on(data.eventName, function (referenceFrame) {

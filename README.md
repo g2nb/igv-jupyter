@@ -153,6 +153,17 @@ b.search('myc')
 
 ```
 
+### SVG output
+
+Saving the current IGV view as an SVG image requires to calls.  
+
+```python
+b.get_svg()
+
+b.display_svg()
+
+```
+
 
 ### Events
 
