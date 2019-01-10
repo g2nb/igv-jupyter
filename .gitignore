@@ -5,17 +5,10 @@ compiler.xml
 /.idea/modules.xml
 /.idea/vcs.xml
 /.idea/workspace.xml
-/examples/.ipynb_checkpoints/API Example-checkpoint.ipynb
-/igv/__pycache__/__init__.cpython-35.pyc
-dugla-checkpoint.ipynb
 .DS_Store
-BAM Example-checkpoint.ipynb
-Copy Number Example-checkpoint.ipynb
-/examples/.ipynb_checkpoints/local-seg-checkpoint.ipynb
 /.idea
-/examples/.ipynb_checkpoints
 *.js-jupyter.iml
 /build/
-/.ipynb_checkpoints/
 /igv.egg-info/
 /MANIFEST
+/dist
