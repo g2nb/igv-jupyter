@@ -2,7 +2,6 @@
 
 set -o verbose
 
-rm -fr /usr/local/share/jupyter/
 rm -fr dist
 rm -fr build
 rm -fr igv.egg-info
