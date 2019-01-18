@@ -20,11 +20,19 @@ class Browser:
     def __init__(self, config):
         """Initialize an igv Browser object.
 
-        Arguments:
-            config: A dictionary specifying the browser configuration.  This will be converted to JSON and passed
-                    to igv.js  "igv.createBrowser(config)" as described in the igv.js documentation. See
-                    https://github.com/igvteam/igv.js/wiki/Browser-Configuration-2.0 for configuration options.
+        :param: config - A dictionary specifying the browser configuration.  This will be converted to JSON and passed
+                to igv.js  "igv.createBrowser(config)" as described in the igv.js documentation. See
+                https://github.com/igvteam/igv.js/wiki/Browser-Configuration-2.0 for configuration options.
+        :type dict
         """
+
+        # Check for minimal igv.js requirements (the only required field for all tracks is url, which must be a string)
+        if isinstance(config, dict) == False:
+            raise Exception("config parameter must be a dictionary")
+        has_genome = "genome" in config or "reference" in config
+        if not has_genome:
+            raise Exception("config must specify either 'genome' or 'reference'")
+
 
         id = self._gen_id()
         config["id"] = id
@@ -74,8 +82,9 @@ class Browser:
         """
         Go to the specified locus.
 
-        Arguments:
-             locus: String of the form  "chromsosome:start-end", or for supported genomes (hg38, hg19, and mm10) a gene name.
+        :param locus:  Chromosome location of the form  "chromsosome:start-end", or for supported genomes (hg38, hg19, and mm10) a gene name.
+        :type str
+
         """
 
         return self._send({
@@ -107,9 +116,17 @@ class Browser:
         """
         Load a track.  Corresponds to the igv.js Browser function loadTrack (see https://github.com/igvteam/igv.js/wiki/Browser-Control-2.0#loadtrack).
 
-        Arguments:
-             track: A dictionary specifying track options.  See https://github.com/igvteam/igv.js/wiki/Tracks-2.0.
+        :param  track: A dictionary specifying track options.  See https://github.com/igvteam/igv.js/wiki/Tracks-2.0.
+        :type dict
         """
+
+        # Check for minimal igv.js requirements (the only required field for all tracks is url, which must be a string)
+        if isinstance(track, dict) == False:
+            raise Exception("track parameter must be a dictionary")
+        if "url" not in track:
+            raise Exception("track dictionary must contain a 'url' field")
+
+
         return self._send({
             "id": self.igv_id,
             "command": "loadTrack",
@@ -138,10 +155,11 @@ class Browser:
         """
         Subscribe to an igv.js event.
 
-        Arguments:
-            eventName: Name of the event.  Currently only "locuschange" is supported.
-            cb: A callback function taking a single argument.  For the locuschange event this argument will contain
+        :param Name of the event.  Currently only "locuschange" is supported.
+        :type str
+        :param cb - callback function taking a single argument.  For the locuschange event this argument will contain
                 a dictionary of the form  {chr, start, end}
+        :type function
         """
         self.eventHandlers[eventName] = cb
         return self._send({
