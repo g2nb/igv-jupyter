@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(name='igv',
                  packages=['igv'],
-                 version='0.9.2',
+                 version='0.9.4',
                  description='Jupyter extension for embedding the genome visualation igv.js in a notebook',
                  long_description=long_description,
                  long_description_content_type="text/markdown",

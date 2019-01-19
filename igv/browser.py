@@ -123,9 +123,6 @@ class Browser:
         # Check for minimal igv.js requirements (the only required field for all tracks is url, which must be a string)
         if isinstance(track, dict) == False:
             raise Exception("track parameter must be a dictionary")
-        if "url" not in track:
-            raise Exception("track dictionary must contain a 'url' field")
-
 
         return self._send({
             "id": self.igv_id,
