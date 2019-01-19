@@ -17,6 +17,8 @@ Requirements:
 
 ```bash
 pip install igv
+jupyter nbextensioninstall --py igv
+jupyter nbextension enable --py igv
 ```
 
 ## Usage
@@ -155,7 +157,7 @@ b.search('myc')
 
 ### SVG output
 
-Saving the current IGV view as an SVG image requires to calls.  
+Saving the current IGV view as an SVG image requires two calls.  
 
 ```python
 b.get_svg()
