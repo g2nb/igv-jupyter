@@ -1,7 +1,22 @@
 import setuptools
+import os
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
+    
+def get_extension_files():
+    """
+    Move the files to the nbextensions directory and enable the extension
+    """
+    return [
+        ('share/jupyter/nbextensions/igv', [
+            'igv/static/extension.js',
+        ]),
+        ('share/jupyter/nbextensions/igv/igvjs',
+         ['igv/static/igvjs/' + f for f in os.listdir('igv/static/igvjs')]
+         ),
+        ('etc/jupyter/nbconfig/notebook.d', ['igv.json']),
+    ]
 
 setuptools.setup(name='igv',
                  packages=['igv'],
@@ -23,4 +38,5 @@ setuptools.setup(name='igv',
                      'Framework :: IPython',
                  ],
                  package_data={'igv': ['static/extension.js', 'static/igvjs/*']},
+                 data_files=get_extension_files(),
                  )
