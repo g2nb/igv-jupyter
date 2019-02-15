@@ -17,8 +17,18 @@ Requirements:
 
 ```bash
 pip install igv
-jupyter nbextensioninstall --py igv
+
+# To install to configuration in your home directory
+jupyter serverextension enable --py igv
+jupyter nbextension install --py igv
 jupyter nbextension enable --py igv
+
+
+# If using a virtual environment or conda (don't forget to activate
+jupyter serverextension enable --py igv --sys-prefix
+jupyter nbextension install --py igv --sys-prefix
+jupyter nbextension enable --py igv --sys-prefixe
+
 ```
 
 ## Usage
