@@ -1,4 +1,4 @@
-# igv.js Jupyter Extension
+# igv Jupyter Extension
 
 IGV is an extension for [Jupyter Notebook](http://jupyter.org/) which
 wraps [igv.js](https://github.com/igvteam/igv.js).  With this
