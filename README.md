@@ -1,6 +1,6 @@
 # igv Jupyter Extension
 
-[![Binder](https://beta.mybinder.org/badge.svg)](https://mybinder.org/v2/gh/tmtabor/igv-jupyter/master?filepath=examples/BamFiles.ipynb)
+[![Binder](https://beta.mybinder.org/badge.svg)](https://mybinder.org/v2/gh/igvteam/igv-jupyter/master?filepath=examples/BamFiles.ipynb)
 
 IGV is an extension for [Jupyter Notebook](http://jupyter.org/) which
 wraps [igv.js](https://github.com/igvteam/igv.js).  With this
