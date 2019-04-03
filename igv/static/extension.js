@@ -1,5 +1,5 @@
 define(
-    ["/nbextensions/igv/igvjs/igv.js"],
+    ["nbextensions/igv/igvjs/igv"],
     //["https://cdn.jsdelivr.net/npm/igv@2.1.0/dist/igv.min.js"],
     function (igv) {
 
