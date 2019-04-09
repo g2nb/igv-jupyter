@@ -5,7 +5,7 @@
 =======
 
 
-IGV is an extension for [Jupyter Notebook](http://jupyter.org/) which
+igv-jupyter is an extension for [Jupyter Notebook](http://jupyter.org/) which
 wraps [igv.js](https://github.com/igvteam/igv.js).  With this
 extension you can render igv.js in a cell and call its API from
 the notebook. The extension exposes a python API that mimics the igv.js 

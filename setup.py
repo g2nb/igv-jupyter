@@ -1,12 +1,11 @@
 import setuptools
 
 with open("README.md", "r") as fh:
-    prefix = '# NOTE - THIS PACKAGE IS DEPRECATED AND WILL NOT BE UPDATED.  The package is now distributed as igv-jupyter.'
-    long_description = prefix + fh.read()
+    long_description =  fh.read()
 
-setuptools.setup(name='igv',
+setuptools.setup(name='igv-jupyter',
                  packages=['igv'],
-                 version='0.9.6',
+                 version='0.9.7',
                  description='Jupyter extension for embedding the genome visualation igv.js in a notebook',
                  long_description=long_description,
                  long_description_content_type="text/markdown",
