@@ -1,6 +1,9 @@
+
 # igv Jupyter Extension
 
 [![Binder](https://beta.mybinder.org/badge.svg)](https://mybinder.org/v2/gh/igvteam/igv-jupyter/master?filepath=examples/BamFiles.ipynb)
+=======
+
 
 IGV is an extension for [Jupyter Notebook](http://jupyter.org/) which
 wraps [igv.js](https://github.com/igvteam/igv.js).  With this
@@ -29,7 +32,7 @@ jupyter nbextension enable --py igv
 # If using a virtual environment or conda (don't forget to activate
 jupyter serverextension enable --py igv --sys-prefix
 jupyter nbextension install --py igv --sys-prefix
-jupyter nbextension enable --py igv --sys-prefixe
+jupyter nbextension enable --py igv --sys-prefix
 
 ```
 
@@ -205,5 +208,14 @@ python setup.py build
 pip install -e .
 jupyter nbextension install --py igv
 jupyter nbextension enable --py igv
+
+```
+
+Creating a conda environment
+```bash
+conda create -n test python=3.7.1
+conda activate test
+conda install pip
+conda install jupyter
 
 ```
