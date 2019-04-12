@@ -21,7 +21,7 @@ Requirements:
 
 
 ```bash
-pip install igv
+pip install igv-jupyter
 
 # To install to configuration in your home directory
 jupyter serverextension enable --py igv
