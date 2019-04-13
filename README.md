@@ -29,7 +29,7 @@ jupyter nbextension install --py igv
 jupyter nbextension enable --py igv
 
 
-# If using a virtual environment or conda
+# If using a virtual environment
 jupyter serverextension enable --py igv --sys-prefix
 jupyter nbextension install --py igv --sys-prefix
 jupyter nbextension enable --py igv --sys-prefix
