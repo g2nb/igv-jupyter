@@ -191,11 +191,11 @@ b.display_svg()
 def locuschange(data):
     b.locus = data
 
-b.on("locuschange", locuschange)
+    b.on("locuschange", locuschange)
 
-b.zoom_in()
+    b.zoom_in()
 
-return b.locus
+    return b.locus
 
 ```
 
