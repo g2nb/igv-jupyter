@@ -36,18 +36,20 @@ define(
 
                             case "zoomIn":
                                 getBrowser(id).zoomIn()
+                                // TODO send complete message
                                 break
 
                             case "zoomOut":
                                 getBrowser(id).zoomOut()
+                                // TODO send complete message
                                 break
 
                             case "loadTrack":
-                                getBrowser(id).loadTrack(data.track)
+                                loadTrack(id, data.track)
                                 break
 
                             case "search":
-                                getBrowser(id).search(data.locus)
+                                search(id, data.locus)
                                 break
 
                             case "remove":
@@ -81,6 +83,12 @@ define(
                                 console.error("Unrecognized method: " + msg.method)
                         }
 
+                        function getBrowser(id) {
+                            return igv.browserCache[id]
+                        }
+
+                        // ASYNC functino wrappers
+
                         function createBrowser(div, config, comm) {
                             // TODO -- send message that browser is ready
                             igv.createBrowser(div, config)
@@ -97,9 +105,23 @@ define(
                                 })
                         }
 
-                        function getBrowser(id) {
-                            return igv.browserCache[id]
+                        function loadTrack(id, config) {
+                            getBrowser(id).loadTrack(config)
+                                .then(function (track) {
+                                    // TODO -- send message that track is loaded
+                                })
                         }
+
+                        function search(id, locus) {
+                            getBrowser(id).search(locus)
+                                .then(function (ignore) {
+                                    // TODO - send completion message
+                                });
+                        }
+
+
+
+
 
                     });
                     comm.on_close(function (msg) {
