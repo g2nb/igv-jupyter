@@ -27,21 +27,12 @@ define(
                         var data = JSON.parse(msg.content.data)
                         var method = data.command
                         var id = data.id
+                        var browser = getBrowser(id)
                         switch (method) {
 
                             case "create":
                                 var div = document.getElementById(id)
                                 createBrowser(div, data.options, comm)
-                                break
-
-                            case "zoomIn":
-                                getBrowser(id).zoomIn()
-                                // TODO send complete message
-                                break
-
-                            case "zoomOut":
-                                getBrowser(id).zoomOut()
-                                // TODO send complete message
                                 break
 
                             case "loadTrack":
@@ -52,30 +43,68 @@ define(
                                 search(id, data.locus)
                                 break
 
+                            case "zoomIn":
+                                try {
+                                    browser.zoomIn()
+                                } catch (e) {
+                                    browser.presentAlert(e.message)
+                                } finally {
+                                    comm.send('{"status": "ready"}')
+                                }
+                                break
+
+                            case "zoomOut":
+                                try {
+                                    browser.zoomOut()
+                                } catch (e) {
+                                    browser.presentAlert(e.message)
+                                } finally {
+                                    comm.send('{"status": "ready"}')
+                                }
+                                break
+
                             case "remove":
-                                delete igv.browserCache[id]
-                                var div = document.getElementById(id)
-                                div.parentNode.removeChild(div)
+                                try {
+                                    delete igv.browserCache[id]
+                                    var div = document.getElementById(id)
+                                    div.parentNode.removeChild(div)
+                                } catch (e) {
+                                    browser.presentAlert(e.message)
+                                } finally {
+                                    comm.send('{"status": "ready"}')
+                                }
                                 break
 
                             case "toSVG":
-                                var svg = getBrowser(id).toSVG()
-                                comm.send(JSON.stringify({
-                                    "svg": svg
-                                }))
+                                try {
+                                    var svg = browser.toSVG()
+
+                                    comm.send(JSON.stringify({
+                                        "svg": svg
+                                    }))
+                                } catch (e) {
+                                    browser.presentAlert(e.message)
+                                } finally {
+                                    comm.send('{"status": "ready"}')
+                                }
                                 break;
 
                             case "on":
-                                if ("locuschange" === data.eventName) {
-                                    getBrowser(id).on(data.eventName, function (referenceFrame) {
-                                        comm.send(JSON.stringify({
-                                            "event": data.eventName,
-                                            "data": referenceFrame
-                                        }))
-                                    })
-                                }
-                                else {
-                                    console.log("Unsupported event: " + data.eventName)
+                                try {
+                                    if ("locuschange" === data.eventName) {
+                                        browser.on(data.eventName, function (referenceFrame) {
+                                            comm.send(JSON.stringify({
+                                                "event": data.eventName,
+                                                "data": referenceFrame
+                                            }))
+                                        })
+                                    } else {
+                                        browser.presentAlert("Unsupported event: " + data.eventName)
+                                    }
+                                } catch (e) {
+                                    browser.presentAlert(e.message)
+                                } finally {
+                                    comm.send('{"status": "ready"}')
                                 }
                                 break
 
@@ -89,7 +118,7 @@ define(
 
                         // ASYNC functino wrappers
 
-                        function createBrowser(div, config, comm) {
+                        function createBrowser(div, config) {
                             // TODO -- send message that browser is ready
                             igv.createBrowser(div, config)
                                 .then(function (browser) {
@@ -103,26 +132,35 @@ define(
                                     //    comm.send(JSON.stringify({"locus": referenceFrame}))
                                     //});
                                 })
+                                .catch(function (error) {
+                                    comm.send('{"status": "ready"}')
+                                    browser.presentAlert(error.message);
+                                })
                         }
 
                         function loadTrack(id, config) {
-                            getBrowser(id).loadTrack(config)
+                            var browser = getBrowser(id);
+                            browser.loadTrack(config)
                                 .then(function (track) {
-                                    // TODO -- send message that track is loaded
+                                    comm.send('{"status": "ready"}')
+                                })
+                                .catch(function (error) {
+                                    comm.send('{"status": "ready"}')
+                                    browser.presentAlert(error.message);
                                 })
                         }
 
                         function search(id, locus) {
-                            getBrowser(id).search(locus)
+                            var browser = getBrowser(id);
+                            browser.search(locus)
                                 .then(function (ignore) {
-                                    // TODO - send completion message
-                                });
+                                    comm.send('{"status": "ready"}')
+                                })
+                                .catch(function (error) {
+                                    comm.send('{"status": "ready"}')
+                                    browser.presentAlert(error.message);
+                                })
                         }
-
-
-
-
-
                     });
                     comm.on_close(function (msg) {
                     });

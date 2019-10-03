@@ -179,6 +179,7 @@ class Browser:
 
         if self.status == "ready":
             self.comm.send(json.dumps(msg))
+            self.status = "busy"
             return "OK"
         else:
             return "IGV Browser not ready"
