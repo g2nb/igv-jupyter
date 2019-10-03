@@ -47,7 +47,8 @@ define(
                                 try {
                                     browser.zoomIn()
                                 } catch (e) {
-                                    browser.presentAlert(e.message)
+                                    alert(e.message)
+                                    console.error(e)
                                 } finally {
                                     comm.send('{"status": "ready"}')
                                 }
@@ -57,7 +58,8 @@ define(
                                 try {
                                     browser.zoomOut()
                                 } catch (e) {
-                                    browser.presentAlert(e.message)
+                                    alert(e.message)
+                                    console.error(e)
                                 } finally {
                                     comm.send('{"status": "ready"}')
                                 }
@@ -69,7 +71,8 @@ define(
                                     var div = document.getElementById(id)
                                     div.parentNode.removeChild(div)
                                 } catch (e) {
-                                    browser.presentAlert(e.message)
+                                    alert(e.message)
+                                    console.error(e)
                                 } finally {
                                     comm.send('{"status": "ready"}')
                                 }
@@ -83,7 +86,8 @@ define(
                                         "svg": svg
                                     }))
                                 } catch (e) {
-                                    browser.presentAlert(e.message)
+                                    alert(e.message)
+                                    console.error(e)
                                 } finally {
                                     comm.send('{"status": "ready"}')
                                 }
@@ -99,10 +103,11 @@ define(
                                             }))
                                         })
                                     } else {
-                                        browser.presentAlert("Unsupported event: " + data.eventName)
+                                        alert("Unsupported event: " + data.eventName)
                                     }
                                 } catch (e) {
-                                    browser.presentAlert(e.message)
+                                    alert(e.message)
+                                    console.error(e)
                                 } finally {
                                     comm.send('{"status": "ready"}')
                                 }
@@ -134,7 +139,8 @@ define(
                                 })
                                 .catch(function (error) {
                                     comm.send('{"status": "ready"}')
-                                    browser.presentAlert(error.message);
+                                    alert(error.message);
+                                    console.error(e)
                                 })
                         }
 
@@ -146,7 +152,8 @@ define(
                                 })
                                 .catch(function (error) {
                                     comm.send('{"status": "ready"}')
-                                    browser.presentAlert(error.message);
+                                    alert(error.message);
+                                    console.error(e)
                                 })
                         }
 
@@ -158,7 +165,8 @@ define(
                                 })
                                 .catch(function (error) {
                                     comm.send('{"status": "ready"}')
-                                    browser.presentAlert(error.message);
+                                    alert(error.message)
+                                    console.error(e)
                                 })
                         }
                     });
