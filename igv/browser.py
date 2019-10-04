@@ -2,6 +2,7 @@ from IPython.display import HTML, SVG, display
 from ipykernel.comm import Comm
 import json
 import random
+import time
 
 class _IGVComm:
 
@@ -14,7 +15,7 @@ class _IGVComm:
         self.comm.send(message)
 
 
-class Browser:
+class Browser(object):
 
     # Always remember the *self* argument
     def __init__(self, config):
@@ -39,16 +40,16 @@ class Browser:
         self.igv_id = id
         self.config = config
         self.comm = _IGVComm("igvcomm")
-        self.status = "initializing"
+        self._status = "initializing"
         self.locus = None
         self.eventHandlers = {}
         self.svg = None
+        self.message_queue = []
 
         # Add a callback for received messages.
         @self.comm.comm.on_msg
         def _recv(msg):
             data = json.loads(msg['content']['data'])
-            print(json.dumps(data))
             if 'status' in data:
                 self.status = data['status']
             elif 'locus' in data:
@@ -64,6 +65,16 @@ class Browser:
                         eventData = data['data']
                     handler(eventData)
 
+    @property
+    def status(self):
+        return self._status
+
+    @status.setter
+    def status(self, value):
+        self._status = value
+        if value == "ready" and len(self.message_queue) > 0:
+            time.sleep(0.5)
+            self._send(self.message_queue.pop(0))
 
     def show(self):
         """
@@ -176,13 +187,13 @@ class Browser:
         })
 
     def _send(self, msg):
-
         if self.status == "ready":
-            self.comm.send(json.dumps(msg))
             self.status = "busy"
+            self.comm.send(json.dumps(msg))
             return "OK"
         else:
-            return "IGV Browser not ready"
+            self.message_queue.append(msg)
+            return "Queued"
 
     def _gen_id(self):
         return 'igv_' + str(random.randint(1, 10000000))
