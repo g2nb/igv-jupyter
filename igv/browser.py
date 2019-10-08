@@ -193,7 +193,7 @@ class Browser(object):
             return "OK"
         else:
             self.message_queue.append(msg)
-            return "Queued"
+            return "OK"
 
     def _gen_id(self):
         return 'igv_' + str(random.randint(1, 10000000))
