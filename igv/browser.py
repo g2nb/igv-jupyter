@@ -166,7 +166,7 @@ class Browser(object):
         Display the current SVG image.  You must call get_svg() before calling this method.
         """
         if self.svg == None:
-            return 'Must call get_svg() before displaying'
+            return 'Awaiting SVG - try again in a few seconds'
         else:
             display(SVG(self.svg))
 
