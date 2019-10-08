@@ -11179,6 +11179,12 @@ Context.prototype = {
       return "rgba(" + r + "," + g + "," + b + "," + alpha + ")";
     },
     addAlpha: function addAlpha(color, alpha) {
+      var c = this.colorNameToHex(color);
+
+      if (c) {
+        color = c;
+      }
+
       var isHex = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(color);
 
       if (color.startsWith("rgba")) {
@@ -11217,12 +11223,179 @@ Context.prototype = {
       }
     },
     darkenLighten: function darkenLighten(color, amt) {
-      var src = color.startsWith('rgb(') ? color : IGVColor.hexToRgb(color);
+      var src;
+      var hexColor = this.colorNameToHex(color);
+
+      if (hexColor) {
+        src = IGVColor.hexToRgb(hexColor);
+      } else {
+        src = color.startsWith('rgb(') ? color : IGVColor.hexToRgb(color);
+      }
+
       var components = src.replace(")", "").substring(4).split(",");
       var r = Math.max(0, Math.min(255, Number.parseInt(components[0].trim()) + amt));
       var g = Math.max(0, Math.min(255, Number.parseInt(components[1].trim()) + amt));
       var b = Math.max(0, Math.min(255, Number.parseInt(components[2].trim()) + amt));
       return 'rgb(' + r.toString() + ',' + g.toString() + ',' + b.toString() + ')';
+    },
+
+    /**
+     * Convert html/css color name to hex value.  Adapted from https://gist.github.com/mxfh/4719348
+     * @param colorName
+     * @returns {*}
+     */
+    colorNameToHex: function colorNameToHex(colorName) {
+      // color list from http://stackoverflow.com/q/1573053/731179  with added gray/gray
+      var definedColorNames = {
+        "aliceblue": "#f0f8ff",
+        "antiquewhite": "#faebd7",
+        "aqua": "#00ffff",
+        "aquamarine": "#7fffd4",
+        "azure": "#f0ffff",
+        "beige": "#f5f5dc",
+        "bisque": "#ffe4c4",
+        "black": "#000000",
+        "blanchedalmond": "#ffebcd",
+        "blue": "#0000ff",
+        "blueviolet": "#8a2be2",
+        "brown": "#a52a2a",
+        "burlywood": "#deb887",
+        "cadetblue": "#5f9ea0",
+        "chartreuse": "#7fff00",
+        "chocolate": "#d2691e",
+        "coral": "#ff7f50",
+        "cornflowerblue": "#6495ed",
+        "cornsilk": "#fff8dc",
+        "crimson": "#dc143c",
+        "cyan": "#00ffff",
+        "darkblue": "#00008b",
+        "darkcyan": "#008b8b",
+        "darkgoldenrod": "#b8860b",
+        "darkgray": "#a9a9a9",
+        "darkgreen": "#006400",
+        "darkkhaki": "#bdb76b",
+        "darkmagenta": "#8b008b",
+        "darkolivegreen": "#556b2f",
+        "darkorange": "#ff8c00",
+        "darkorchid": "#9932cc",
+        "darkred": "#8b0000",
+        "darksalmon": "#e9967a",
+        "darkseagreen": "#8fbc8f",
+        "darkslateblue": "#483d8b",
+        "darkslategray": "#2f4f4f",
+        "darkturquoise": "#00ced1",
+        "darkviolet": "#9400d3",
+        "deeppink": "#ff1493",
+        "deepskyblue": "#00bfff",
+        "dimgray": "#696969",
+        "dodgerblue": "#1e90ff",
+        "firebrick": "#b22222",
+        "floralwhite": "#fffaf0",
+        "forestgreen": "#228b22",
+        "fuchsia": "#ff00ff",
+        "gainsboro": "#dcdcdc",
+        "ghostwhite": "#f8f8ff",
+        "gold": "#ffd700",
+        "goldenrod": "#daa520",
+        "gray": "#808080",
+        "green": "#008000",
+        "greenyellow": "#adff2f",
+        "honeydew": "#f0fff0",
+        "hotpink": "#ff69b4",
+        "indianred ": "#cd5c5c",
+        "indigo ": "#4b0082",
+        "ivory": "#fffff0",
+        "khaki": "#f0e68c",
+        "lavender": "#e6e6fa",
+        "lavenderblush": "#fff0f5",
+        "lawngreen": "#7cfc00",
+        "lemonchiffon": "#fffacd",
+        "lightblue": "#add8e6",
+        "lightcoral": "#f08080",
+        "lightcyan": "#e0ffff",
+        "lightgoldenrodyellow": "#fafad2",
+        "lightgrey": "#d3d3d3",
+        "lightgreen": "#90ee90",
+        "lightpink": "#ffb6c1",
+        "lightsalmon": "#ffa07a",
+        "lightseagreen": "#20b2aa",
+        "lightskyblue": "#87cefa",
+        "lightslategray": "#778899",
+        "lightsteelblue": "#b0c4de",
+        "lightyellow": "#ffffe0",
+        "lime": "#00ff00",
+        "limegreen": "#32cd32",
+        "linen": "#faf0e6",
+        "magenta": "#ff00ff",
+        "maroon": "#800000",
+        "mediumaquamarine": "#66cdaa",
+        "mediumblue": "#0000cd",
+        "mediumorchid": "#ba55d3",
+        "mediumpurple": "#9370d8",
+        "mediumseagreen": "#3cb371",
+        "mediumslateblue": "#7b68ee",
+        "mediumspringgreen": "#00fa9a",
+        "mediumturquoise": "#48d1cc",
+        "mediumvioletred": "#c71585",
+        "midnightblue": "#191970",
+        "mintcream": "#f5fffa",
+        "mistyrose": "#ffe4e1",
+        "moccasin": "#ffe4b5",
+        "navajowhite": "#ffdead",
+        "navy": "#000080",
+        "oldlace": "#fdf5e6",
+        "olive": "#808000",
+        "olivedrab": "#6b8e23",
+        "orange": "#ffa500",
+        "orangered": "#ff4500",
+        "orchid": "#da70d6",
+        "palegoldenrod": "#eee8aa",
+        "palegreen": "#98fb98",
+        "paleturquoise": "#afeeee",
+        "palevioletred": "#d87093",
+        "papayawhip": "#ffefd5",
+        "peachpuff": "#ffdab9",
+        "peru": "#cd853f",
+        "pink": "#ffc0cb",
+        "plum": "#dda0dd",
+        "powderblue": "#b0e0e6",
+        "purple": "#800080",
+        "red": "#ff0000",
+        "rosybrown": "#bc8f8f",
+        "royalblue": "#4169e1",
+        "saddlebrown": "#8b4513",
+        "salmon": "#fa8072",
+        "sandybrown": "#f4a460",
+        "seagreen": "#2e8b57",
+        "seashell": "#fff5ee",
+        "sienna": "#a0522d",
+        "silver": "#c0c0c0",
+        "skyblue": "#87ceeb",
+        "slateblue": "#6a5acd",
+        "slategray": "#708090",
+        "snow": "#fffafa",
+        "springgreen": "#00ff7f",
+        "steelblue": "#4682b4",
+        "tan": "#d2b48c",
+        "teal": "#008080",
+        "thistle": "#d8bfd8",
+        "tomato": "#ff6347",
+        "turquoise": "#40e0d0",
+        "violet": "#ee82ee",
+        "wheat": "#f5deb3",
+        "white": "#ffffff",
+        "whitesmoke": "#f5f5f5",
+        "yellow": "#ffff00",
+        "yellowgreen": "#9acd32",
+        "darkgrey": "#a9a9a9",
+        "darkslategrey": "#2f4f4f",
+        "dimgrey": "#696969",
+        "grey": "#808080",
+        "lightgray": "#d3d3d3",
+        "lightslategrey": "#778899",
+        "slategrey": "#708090"
+      };
+      return definedColorNames[colorName];
     }
   };
 
@@ -18454,7 +18627,9 @@ Context.prototype = {
   }
 
   function loadStringFromFile(localfile, options) {
-    return new Promise(function (fullfill, reject) {
+    options = options || {};
+    var blob = options.range ? localfile.slice(options.range.start, options.range.start + options.range.size) : localfile;
+    return new Promise(function (resolve, reject) {
       var fileReader = new FileReader();
       var compression = NONE;
 
@@ -18466,20 +18641,21 @@ Context.prototype = {
 
       fileReader.onload = function (e) {
         if (compression === NONE) {
-          return fullfill(fileReader.result);
+          return resolve(fileReader.result);
         } else {
-          return fullfill(arrayBufferToString(fileReader.result, compression));
+          return resolve(arrayBufferToString(fileReader.result, compression));
         }
       };
 
       fileReader.onerror = function (e) {
-        reject(null, fileReader);
+        var error = fileReader.error;
+        reject(error + " " + localfile.name, fileReader);
       };
 
       if (compression === NONE) {
-        fileReader.readAsText(localfile);
+        fileReader.readAsText(blob);
       } else {
-        fileReader.readAsArrayBuffer(localfile);
+        fileReader.readAsArrayBuffer(blob);
       }
     });
   }
@@ -18733,6 +18909,7 @@ Context.prototype = {
    * @param x
    * @returns {boolean}
    */
+
   function isString(x) {
     return typeof x === "string" || x instanceof String;
   } // StackOverflow: http://stackoverflow.com/a/10810674/116169
@@ -18777,6 +18954,78 @@ Context.prototype = {
     }
 
     return tokens;
+  }
+
+  function hashCode(s) {
+    return s.split("").reduce(function (a, b) {
+      a = (a << 5) - a + b.charCodeAt(0);
+      return a & a;
+    }, 0);
+  }
+  /**
+   * Compress string and encode in a url safe form
+   * @param s
+   */
+
+
+  function compressString(str) {
+    var bytes = [];
+
+    for (var i = 0; i < str.length; i++) {
+      bytes.push(str.charCodeAt(i));
+    }
+
+    var compressedBytes = new Zlib.RawDeflate(bytes).compress(); // UInt8Arry
+
+    var compressedString = String.fromCharCode.apply(null, compressedBytes); // Convert to string
+
+    var enc = btoa(compressedString);
+    return enc.replace(/\+/g, '.').replace(/\//g, '_').replace(/=/g, '-'); // URL safe
+  }
+  /**
+   * Uncompress the url-safe encoded compressed string, presumably created by compressString above
+   *
+   * @param enc
+   * @returns {string}
+   */
+
+
+  function uncompressString(enc) {
+    enc = enc.replace(/\./g, '+').replace(/_/g, '/').replace(/-/g, '=');
+    var compressedString = atob(enc);
+    var compressedBytes = [];
+
+    for (var i = 0; i < compressedString.length; i++) {
+      compressedBytes.push(compressedString.charCodeAt(i));
+    }
+
+    var bytes = new Zlib.RawInflate(compressedBytes).decompress();
+    var str = '';
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      for (var _iterator = bytes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var b = _step.value;
+        str += String.fromCharCode(b);
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator.return != null) {
+          _iterator.return();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+
+    return str;
   }
 
   /*
@@ -26131,8 +26380,7 @@ Context.prototype = {
           mergedChunks.push(chunk);
           lastChunk = chunk;
         } else {
-          if (chunk.minv.block - lastChunk.maxv.block < 65000) {
-            // Merge chunks that are withing 65k of each other
+          if (canMerge(lastChunk, chunk)) {
             if (chunk.maxv.isGreaterThan(lastChunk.maxv)) {
               lastChunk.maxv = chunk.maxv;
             }
@@ -26144,6 +26392,12 @@ Context.prototype = {
       }
     });
     return mergedChunks;
+  }
+
+  function canMerge(chunk1, chunk2) {
+    return chunk2.minv.block - chunk1.maxv.block < 65000 && chunk2.maxv.block - chunk1.minv.block < 5000000; // lastChunk.minv.block === lastChunk.maxv.block &&
+    // lastChunk.maxv.block === chunk.minv.block &&
+    // chunk.minv.block === chunk.maxv.block
   }
   /**
    * Calculate the list of bins that overlap with region [beg, end]
@@ -26447,7 +26701,7 @@ Context.prototype = {
         switch (_context2.prev = _context2.next) {
           case 0:
             if (this.header) {
-              _context2.next = 38;
+              _context2.next = 36;
               break;
             }
 
@@ -26463,26 +26717,25 @@ Context.prototype = {
             features = _context2.sent;
             header = this.header || {};
             header.features = features;
-            _context2.next = 38;
+            _context2.next = 36;
             break;
 
           case 9:
-            _context2.next = 11;
-            return this.getIndex();
-
-          case 11:
-            index = _context2.sent;
-
-            if (!index) {
-              _context2.next = 30;
+            if (!(this.config.indexURL || this.config.indexed)) {
+              _context2.next = 28;
               break;
             }
 
+            _context2.next = 12;
+            return this.getIndex();
+
+          case 12:
+            index = _context2.sent;
             // Load the file header (not HTTP header) for an indexed file.
             maxSize = "vcf" === this.config.format ? 65000 : 1000;
 
             if (!index.tabix) {
-              _context2.next = 23;
+              _context2.next = 21;
               break;
             }
 
@@ -26499,10 +26752,8 @@ Context.prototype = {
             abuffer = _context2.sent;
             bsize = bgzBlockSize(abuffer);
             maxSize = index.firstAlignmentBlock + bsize;
-            _context2.next = 23;
-            break;
 
-          case 23:
+          case 21:
             options = buildOptions(this.config, {
               bgz: index.tabix,
               range: {
@@ -26510,25 +26761,25 @@ Context.prototype = {
                 size: maxSize
               }
             });
-            _context2.next = 26;
+            _context2.next = 24;
             return igvxhr.loadString(this.config.url, options);
 
-          case 26:
+          case 24:
             data = _context2.sent;
             header = this.parser.parseHeader(data);
-            _context2.next = 35;
+            _context2.next = 33;
             break;
 
-          case 30:
-            _context2.next = 32;
+          case 28:
+            _context2.next = 30;
             return this.loadFeaturesNoIndex();
 
-          case 32:
+          case 30:
             _features = _context2.sent;
             header = this.header || {};
             header.features = _features;
 
-          case 35:
+          case 33:
             if (header && this.parser) {
               this.parser.header = header;
             }
@@ -26536,10 +26787,10 @@ Context.prototype = {
             this.header = header;
             return _context2.abrupt("return", header);
 
-          case 38:
+          case 36:
             return _context2.abrupt("return", this.header);
 
-          case 39:
+          case 37:
           case "end":
             return _context2.stop();
         }
@@ -26564,68 +26815,87 @@ Context.prototype = {
    */
 
 
-  FeatureFileReader.prototype.loadIndex = function () {
-    var idxFile = this.config.indexURL;
-
-    if (this.filename.endsWith('.gz') || this.filename.endsWith('.bgz')) {
-      if (!idxFile) {
-        idxFile = this.config.url + '.tbi';
-      }
-
-      return loadBamIndex(idxFile, this.config, true, this.genome);
-    } else {
-      if (!idxFile) {
-        idxFile = this.config.url + '.idx';
-      }
-
-      return loadTribbleIndex(idxFile, this.config, this.genome);
-    }
-  };
-
-  FeatureFileReader.prototype.loadFeaturesNoIndex =
+  FeatureFileReader.prototype.loadIndex =
   /*#__PURE__*/
   _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee3() {
-    var options, data;
+    var idxFile;
     return regeneratorRuntime.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
-            options = buildOptions(this.config); // Add oauth token, if any
+            idxFile = this.config.indexURL;
 
-            _context3.next = 3;
-            return igvxhr.loadString(this.config.url, options);
-
-          case 3:
-            data = _context3.sent;
-            this.header = this.parser.parseHeader(data);
-
-            if (this.header instanceof String && this.header.startsWith("##gff-version 3")) {
-              this.format = 'gff3';
+            if (!(this.filename.endsWith('.gz') || this.filename.endsWith('.bgz'))) {
+              _context3.next = 6;
+              break;
             }
 
-            return _context3.abrupt("return", this.parser.parseFeatures(data));
+            if (!idxFile) {
+              idxFile = this.config.url + '.tbi';
+            }
 
-          case 7:
+            return _context3.abrupt("return", loadBamIndex(idxFile, this.config, true, this.genome));
+
+          case 6:
+            if (!idxFile) {
+              idxFile = this.config.url + '.idx';
+            }
+
+            return _context3.abrupt("return", loadTribbleIndex(idxFile, this.config, this.genome));
+
+          case 8:
           case "end":
             return _context3.stop();
         }
       }
     }, _callee3, this);
   }));
+  FeatureFileReader.prototype.loadFeaturesNoIndex =
+  /*#__PURE__*/
+  _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee4() {
+    var options, data;
+    return regeneratorRuntime.wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            options = buildOptions(this.config); // Add oauth token, if any
+
+            _context4.next = 3;
+            return igvxhr.loadString(this.config.url, options);
+
+          case 3:
+            data = _context4.sent;
+            this.header = this.parser.parseHeader(data);
+
+            if (this.header instanceof String && this.header.startsWith("##gff-version 3")) {
+              this.format = 'gff3';
+            }
+
+            return _context4.abrupt("return", this.parser.parseFeatures(data));
+
+          case 7:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4, this);
+  }));
 
   FeatureFileReader.prototype.loadFeaturesWithIndex =
   /*#__PURE__*/
   function () {
-    var _ref4 = _asyncToGenerator(
+    var _ref5 = _asyncToGenerator(
     /*#__PURE__*/
-    regeneratorRuntime.mark(function _callee5(chr, start, end) {
+    regeneratorRuntime.mark(function _callee6(chr, start, end) {
       var config, parser, tabix, refId, allFeatures, genome, blocks, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _loop, _iterator, _step;
 
-      return regeneratorRuntime.wrap(function _callee5$(_context5) {
+      return regeneratorRuntime.wrap(function _callee6$(_context6) {
         while (1) {
-          switch (_context5.prev = _context5.next) {
+          switch (_context6.prev = _context6.next) {
             case 0:
               //console.log("Using index");
               config = this.config;
@@ -26637,27 +26907,27 @@ Context.prototype = {
               blocks = this.index.blocksForRange(refId, start, end);
 
               if (!(!blocks || blocks.length === 0)) {
-                _context5.next = 11;
+                _context6.next = 11;
                 break;
               }
 
-              return _context5.abrupt("return", []);
+              return _context6.abrupt("return", []);
 
             case 11:
               _iteratorNormalCompletion = true;
               _didIteratorError = false;
               _iteratorError = undefined;
-              _context5.prev = 14;
+              _context6.prev = 14;
               _loop =
               /*#__PURE__*/
-              regeneratorRuntime.mark(function _callee4() {
+              regeneratorRuntime.mark(function _callee5() {
                 var block, startPos, startOffset, endOffset, endPos, lastBlockSize, bsizeOptions, abuffer, options, data, inflated, _inflated, parse;
 
-                return regeneratorRuntime.wrap(function _callee4$(_context4) {
+                return regeneratorRuntime.wrap(function _callee5$(_context5) {
                   while (1) {
-                    switch (_context4.prev = _context4.next) {
+                    switch (_context5.prev = _context5.next) {
                       case 0:
-                        parse = function _ref5(inflated) {
+                        parse = function _ref6(inflated) {
                           var slicedData = startOffset ? inflated.slice(startOffset) : inflated;
                           var slicedFeatures = parser.parseFeatures(slicedData); // Filter features not in requested range.
 
@@ -26706,14 +26976,14 @@ Context.prototype = {
                         endPos = void 0;
 
                         if (!tabix) {
-                          _context4.next = 17;
+                          _context5.next = 17;
                           break;
                         }
 
                         lastBlockSize = 0;
 
                         if (!(endOffset > 0)) {
-                          _context4.next = 14;
+                          _context5.next = 14;
                           break;
                         }
 
@@ -26723,16 +26993,16 @@ Context.prototype = {
                             size: 26
                           }
                         });
-                        _context4.next = 12;
+                        _context5.next = 12;
                         return igvxhr.loadArrayBuffer(config.url, bsizeOptions);
 
                       case 12:
-                        abuffer = _context4.sent;
+                        abuffer = _context5.sent;
                         lastBlockSize = bgzBlockSize(abuffer);
 
                       case 14:
                         endPos = block.maxv.block + lastBlockSize;
-                        _context4.next = 18;
+                        _context5.next = 18;
                         break;
 
                       case 17:
@@ -26747,18 +27017,18 @@ Context.prototype = {
                         });
 
                         if (!tabix) {
-                          _context4.next = 27;
+                          _context5.next = 27;
                           break;
                         }
 
-                        _context4.next = 22;
+                        _context5.next = 22;
                         return igvxhr.loadArrayBuffer(config.url, options);
 
                       case 22:
-                        data = _context4.sent;
+                        data = _context5.sent;
                         inflated = new Uint8Array(unbgzf(data));
                         parse(inflated);
-                        _context4.next = 29;
+                        _context5.next = 29;
                         break;
 
                       case 27:
@@ -26767,118 +27037,151 @@ Context.prototype = {
 
                       case 29:
                       case "end":
-                        return _context4.stop();
+                        return _context5.stop();
                     }
                   }
-                }, _callee4);
+                }, _callee5);
               });
               _iterator = blocks[Symbol.iterator]();
 
             case 17:
               if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
-                _context5.next = 22;
+                _context6.next = 22;
                 break;
               }
 
-              return _context5.delegateYield(_loop(), "t0", 19);
+              return _context6.delegateYield(_loop(), "t0", 19);
 
             case 19:
               _iteratorNormalCompletion = true;
-              _context5.next = 17;
+              _context6.next = 17;
               break;
 
             case 22:
-              _context5.next = 28;
+              _context6.next = 28;
               break;
 
             case 24:
-              _context5.prev = 24;
-              _context5.t1 = _context5["catch"](14);
+              _context6.prev = 24;
+              _context6.t1 = _context6["catch"](14);
               _didIteratorError = true;
-              _iteratorError = _context5.t1;
+              _iteratorError = _context6.t1;
 
             case 28:
-              _context5.prev = 28;
-              _context5.prev = 29;
+              _context6.prev = 28;
+              _context6.prev = 29;
 
               if (!_iteratorNormalCompletion && _iterator.return != null) {
                 _iterator.return();
               }
 
             case 31:
-              _context5.prev = 31;
+              _context6.prev = 31;
 
               if (!_didIteratorError) {
-                _context5.next = 34;
+                _context6.next = 34;
                 break;
               }
 
               throw _iteratorError;
 
             case 34:
-              return _context5.finish(31);
+              return _context6.finish(31);
 
             case 35:
-              return _context5.finish(28);
+              return _context6.finish(28);
 
             case 36:
               allFeatures.sort(function (a, b) {
                 return a.start - b.start;
               });
-              return _context5.abrupt("return", allFeatures);
+              return _context6.abrupt("return", allFeatures);
 
             case 38:
             case "end":
-              return _context5.stop();
+              return _context6.stop();
           }
         }
-      }, _callee5, this, [[14, 24, 28, 36], [29,, 31, 35]]);
+      }, _callee6, this, [[14, 24, 28, 36], [29,, 31, 35]]);
     }));
 
     return function (_x4, _x5, _x6) {
-      return _ref4.apply(this, arguments);
+      return _ref5.apply(this, arguments);
     };
   }();
 
-  FeatureFileReader.prototype.getIndex = function () {
-    var self = this;
+  FeatureFileReader.prototype.getIndex =
+  /*#__PURE__*/
+  _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee7() {
+    var indexOrUndefined;
+    return regeneratorRuntime.wrap(function _callee7$(_context7) {
+      while (1) {
+        switch (_context7.prev = _context7.next) {
+          case 0:
+            if (!(this.index !== undefined || this.indexed === false)) {
+              _context7.next = 2;
+              break;
+            }
 
-    if (this.index !== undefined || this.indexed === false) {
-      return Promise.resolve(this.index);
-    }
+            return _context7.abrupt("return", this.index);
 
-    if (this.indexURL || this.indexed || typeof this.config.url === 'string' && (this.config.url.endsWith(".gz") || this.config.url.endsWith('.bgz'))) {
-      return self.loadIndex().then(function (indexOrUndefined) {
-        if (indexOrUndefined) {
-          self.index = indexOrUndefined;
-          self.indexed = true;
-        } else {
-          self.indexed = false;
+          case 2:
+            if (!(false !== this.indexed)) {
+              _context7.next = 18;
+              break;
+            }
+
+            _context7.prev = 3;
+            _context7.next = 6;
+            return this.loadIndex();
+
+          case 6:
+            indexOrUndefined = _context7.sent;
+
+            if (indexOrUndefined) {
+              this.index = indexOrUndefined;
+              this.indexed = true;
+            } else {
+              this.indexed = false;
+            }
+
+            return _context7.abrupt("return", this.index);
+
+          case 11:
+            _context7.prev = 11;
+            _context7.t0 = _context7["catch"](3);
+
+            if (!this.config.url) {
+              _context7.next = 17;
+              break;
+            }
+
+            throw _context7.t0;
+
+          case 17:
+            this.indexed = false;
+
+          case 18:
+            return _context7.abrupt("return", undefined);
+
+          case 19:
+          case "end":
+            return _context7.stop();
         }
-
-        return self.index;
-      }).catch(function (error) {
-        self.indexed = false;
-
-        if (self.config.indexURL !== undefined) {
-          self.config.browser.presentAlert("Index file not found.  Check track configuration", undefined);
-        }
-      });
-    } else {
-      self.indexed = false;
-      return Promise.resolve(undefined);
-    }
-  };
-
+      }
+    }, _callee7, this, [[3, 11]]);
+  }));
   FeatureFileReader.prototype.loadFeaturesFromDataURI =
   /*#__PURE__*/
   _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee6() {
+  regeneratorRuntime.mark(function _callee8() {
     var plain, features;
-    return regeneratorRuntime.wrap(function _callee6$(_context6) {
+    return regeneratorRuntime.wrap(function _callee8$(_context8) {
       while (1) {
-        switch (_context6.prev = _context6.next) {
+        switch (_context8.prev = _context8.next) {
           case 0:
             plain = decodeDataURI(this.dataURI);
             this.header = this.parser.parseHeader(plain);
@@ -26888,14 +27191,14 @@ Context.prototype = {
             }
 
             features = this.parser.parseFeatures(plain);
-            return _context6.abrupt("return", features);
+            return _context8.abrupt("return", features);
 
           case 5:
           case "end":
-            return _context6.stop();
+            return _context8.stop();
         }
       }
-    }, _callee6, this);
+    }, _callee8, this);
   }));
 
   /**
@@ -48397,6 +48700,7 @@ Context.prototype = {
    * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
    * THE SOFTWARE.
    */
+
   var BamAlignmentRow = function BamAlignmentRow() {
     this.alignments = [];
     this.score = undefined;
@@ -48430,40 +48734,61 @@ Context.prototype = {
     }
   };
 
-  BamAlignmentRow.prototype.updateScore = function (genomicLocation, genomicInterval, sortOption, sortDirection) {
-    this.score = this.calculateScore(Math.floor(genomicLocation), genomicInterval, sortOption, sortDirection);
+  BamAlignmentRow.prototype.updateScore = function (options, alignmentContainer) {
+    this.score = this.calculateScore(options, alignmentContainer);
   };
 
-  BamAlignmentRow.prototype.calculateScore = function (genomicLocation, interval, sortOption, sortDirection) {
+  BamAlignmentRow.prototype.calculateScore = function (options, alignmentContainer) {
+    var genomicLocation = Math.floor(options.position);
+    var sortOption = options.sortOption;
+    var sortDirection = options.direction;
     var alignment = this.findAlignment(genomicLocation);
 
     if (undefined === alignment) {
       return sortDirection ? Number.MAX_VALUE : -Number.MAX_VALUE;
     }
 
-    if ("NUCLEOTIDE" === sortOption) {
-      var readBase = alignment.readBaseAt(genomicLocation);
-      var quality = alignment.readBaseQualityAt(genomicLocation);
+    switch (sortOption) {
+      case "NUCLEOTIDE":
+        {
+          var readBase = alignment.readBaseAt(genomicLocation);
+          var quality = alignment.readBaseQualityAt(genomicLocation);
 
-      if (!readBase) {
-        return sortDirection ? Number.MAX_VALUE : -Number.MAX_VALUE;
-      } else {
-        return calculateBaseScore(readBase, quality, interval, genomicLocation);
-      }
-    } else if ("STRAND" === sortOption) {
-      return alignment.strand ? 1 : -1;
-    } else if ("START" === sortOption) {
-      return alignment.start;
+          if (!readBase) {
+            return sortDirection ? Number.MAX_VALUE : -Number.MAX_VALUE;
+          } else {
+            return calculateBaseScore(readBase, quality, alignmentContainer, genomicLocation);
+          }
+        }
+
+      case "STRAND":
+        return alignment.strand ? 1 : -1;
+
+      case "START":
+        return alignment.start;
+
+      case "TAG":
+        {
+          var tagKey = options.tag;
+          var tagValue = alignment.tags()[tagKey];
+
+          if (tagValue !== undefined) {
+            return hashCode(tagValue);
+          } else {
+            return Number.MAX_VALUE;
+          }
+        }
+
+      default:
+        return Number.MAX_VALUE;
     }
 
-    return Number.MAX_VALUE;
-
-    function calculateBaseScore(base, quality, interval, genomicLocation) {
+    function calculateBaseScore(base, quality, alignmentContainer, genomicLocation) {
       var idx, reference, coverage, count;
-      idx = Math.floor(genomicLocation) - interval.start;
+      idx = Math.floor(genomicLocation) - alignmentContainer.start;
 
-      if (idx < interval.sequence.length) {
-        reference = interval.sequence.charAt(idx);
+      if (idx < alignmentContainer.sequence.length) {
+        reference = alignmentContainer.sequence.charAt(idx);
       }
 
       if (!reference) {
@@ -48479,10 +48804,10 @@ Context.prototype = {
       } else if (reference === base || '=' === base) {
         return 4 - quality / 1000;
       } else if ("X" === base || reference !== base) {
-        idx = Math.floor(genomicLocation) - interval.coverageMap.bpStart;
+        idx = Math.floor(genomicLocation) - alignmentContainer.coverageMap.bpStart;
 
-        if (idx > 0 && idx < interval.coverageMap.coverage.length) {
-          coverage = interval.coverageMap.coverage[idx];
+        if (idx > 0 && idx < alignmentContainer.coverageMap.coverage.length) {
+          coverage = alignmentContainer.coverageMap.coverage[idx];
           count = coverage["pos" + base] + coverage["neg" + base];
           return -(count + quality / 1000);
         } else {
@@ -49168,37 +49493,7 @@ Context.prototype = {
 
   BAMTrack.prototype.menuItemList = function () {
     var self = this;
-    var menuItems = []; // const $separator = $('<div class="igv-track-menu-category igv-track-menu-border-top">');
-    // menuItems.push({name: undefined, object: $separator, click: undefined, init: undefined});
-    //
-    // const clickFunction = function () {
-    //
-    //     self.alignmentTrack.colorBy = 'tag';
-    //     self.config.colorBy = 'tag';
-    //
-    //     const tag = self.trackView.browser.inputDialog.$input.val().trim();
-    //     if (tag !== self.alignmentTrack.colorByTag) {
-    //         self.alignmentTrack.colorByTag = tag;
-    //         self.config.colorByTag = tag;
-    //
-    //         self.alignmentTrack.tagColors = new igv.PaletteColorTable("Set1");
-    //         $('#color-by-tag').text(self.alignmentTrack.colorByTag);
-    //     }
-    //
-    //     self.trackView.repaintViews();
-    // };
-    //
-    // const config =
-    //     {
-    //         label: 'Row Height',
-    //         input: self.alignmentRowHeight.toString(),
-    //         click: clickFunction
-    //     };
-    //
-    // self.trackView.browser.inputDialog.configure(config);
-    // self.trackView.browser.inputDialog.present($(self.trackView.trackDiv));
-    //
-
+    var menuItems = [];
     var $e = $('<div class="igv-track-menu-category igv-track-menu-border-top">');
     $e.text('Color by');
     menuItems.push({
@@ -49316,7 +49611,7 @@ Context.prototype = {
           var clickFunction = function clickFunction() {
             self.alignmentTrack.colorBy = 'tag';
             self.config.colorBy = 'tag';
-            var tag = self.trackView.browser.inputDialog.$input.val().trim();
+            var tag = self.browser.inputDialog.$input.val().trim();
 
             if (tag !== self.alignmentTrack.colorByTag) {
               self.alignmentTrack.colorByTag = tag;
@@ -49333,8 +49628,8 @@ Context.prototype = {
             input: self.alignmentTrack.colorByTag ? self.alignmentTrack.colorByTag : '',
             click: clickFunction
           };
-          self.trackView.browser.inputDialog.configure(config);
-          self.trackView.browser.inputDialog.present($(self.trackView.trackDiv));
+          self.browser.inputDialog.configure(config);
+          self.browser.inputDialog.present($(self.trackView.trackDiv));
         } else {
           self.alignmentTrack.colorBy = menuItem.key;
           self.config.colorBy = menuItem.key;
@@ -49955,8 +50250,6 @@ Context.prototype = {
   };
 
   AlignmentTrack.prototype.sortAlignmentRows = function (options, alignmentContainer) {
-    var genomicLocation = options.position;
-    var sortOption = options.sortOption;
     var direction = options.direction;
 
     if (alignmentContainer === null) {
@@ -49970,7 +50263,7 @@ Context.prototype = {
     try {
       for (var _iterator6 = alignmentContainer.packedAlignmentRows[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
         var row = _step6.value;
-        row.updateScore(genomicLocation, alignmentContainer, sortOption, direction);
+        row.updateScore(options, alignmentContainer);
       }
     } catch (err) {
       _didIteratorError6 = true;
@@ -50002,14 +50295,22 @@ Context.prototype = {
     var self = this;
     var viewport = clickState.viewport;
     var genomicState = clickState.viewport.genomicState;
-    var genomicLocation = clickState.genomicLocation;
+    var clickedObject = this.getClickedObject(clickState.viewport, clickState.y, clickState.genomicLocation);
+    var isSingleAlignment = clickedObject && !clickedObject.paired && typeof clickedObject.isPaired === 'function';
     var list = [];
     list.push({
       label: 'Sort by base',
-      click: sortRows
+      click: sortByBase
     });
-    var clickedObject = this.getClickedObject(clickState.viewport, clickState.y, clickState.genomicLocation);
-    var isSingleAlignment = clickedObject && !clickedObject.paired && typeof clickedObject.isPaired === 'function';
+    list.push({
+      label: 'Sort by read strand',
+      click: sortByStrand
+    });
+    list.push({
+      label: 'Sort by tag',
+      click: sortByTag
+    });
+    list.push('<hr/>');
 
     if (isSingleAlignment && clickedObject.isMateMapped()) {
       list.push({
@@ -50023,22 +50324,52 @@ Context.prototype = {
       label: 'View read sequence',
       click: viewReadSequence
     });
+    list.push('<hr/>');
     return list;
 
-    function sortRows() {
+    function sortByStrand() {
+      sortRows({
+        chr: genomicState.referenceFrame.chrName,
+        position: Math.floor(clickState.genomicLocation),
+        sortOption: "STRAND"
+      });
+    }
+
+    function sortByBase() {
+      sortRows({
+        chr: genomicState.referenceFrame.chrName,
+        position: Math.floor(clickState.genomicLocation),
+        sortOption: "NUCLEOTIDE"
+      });
+    }
+
+    function sortByTag() {
+      var config = {
+        label: 'Tag Name',
+        input: self.sortByTag ? self.sortByTag : '',
+        click: function click() {
+          var tag = self.browser.inputDialog.$input.val().trim();
+          self.sortByTag = tag;
+          sortRows({
+            chr: genomicState.referenceFrame.chrName,
+            position: Math.floor(clickState.genomicLocation),
+            sortOption: "TAG",
+            tag: tag
+          });
+        }
+      };
+      self.browser.inputDialog.configure(config);
+      self.browser.inputDialog.present($(self.parent.trackView.trackDiv));
+    }
+
+    function sortRows(options) {
       if (!clickState.viewport.tile) {
         return;
       }
 
       var currentSorts = self.parent.sortObjects;
       var cs = currentSorts[viewport.genomicState.id];
-      var direction = cs ? !cs.direction : true;
-      var options = {
-        chr: genomicState.referenceFrame.chrName,
-        position: Math.floor(clickState.genomicLocation),
-        sortOption: "NUCLEOTIDE",
-        direction: direction
-      };
+      options.direction = cs ? !cs.direction : true;
       self.sortAlignmentRows(options, clickState.viewport.getCachedFeatures());
       self.parent.trackView.repaintViews();
       currentSorts[viewport.genomicState.id] = options;
@@ -50047,7 +50378,7 @@ Context.prototype = {
     function viewMateInSplitScreen() {
       if (clickedObject.mate) {
         self.highlightedAlignmentReadNamed = clickedObject.readName;
-        self.parent.trackView.browser.presentSplitScreenMultiLocusPanel(clickedObject, clickState.viewport.genomicState);
+        self.browser.presentSplitScreenMultiLocusPanel(clickedObject, clickState.viewport.genomicState);
       }
     }
 
@@ -54085,7 +54416,7 @@ Context.prototype = {
     var _ref10 = _asyncToGenerator(
     /*#__PURE__*/
     regeneratorRuntime.mark(function _callee7(config) {
-      var json, settings, property, newTrack;
+      var json, settings, property, newTrack, msg;
       return regeneratorRuntime.wrap(function _callee7$(_context7) {
         while (1) {
           switch (_context7.prev = _context7.next) {
@@ -54189,17 +54520,24 @@ Context.prototype = {
               this.addTrack(newTrack);
               return _context7.abrupt("return", newTrack);
 
-            case 31:
-              _context7.prev = 31;
-              if (!config.noSpinner) this.stopSpinner();
-              return _context7.finish(31);
+            case 33:
+              _context7.prev = 33;
+              _context7.t0 = _context7["catch"](19);
+              console.error(_context7.t0);
+              msg = _context7.t0.message || _context7.t0.toString();
+              this.presentAlert(msg, undefined);
 
-            case 34:
+            case 38:
+              _context7.prev = 38;
+              if (!config.noSpinner) this.stopSpinner();
+              return _context7.finish(38);
+
+            case 41:
             case "end":
               return _context7.stop();
           }
         }
-      }, _callee7, this, [[19,, 31, 34]]);
+      }, _callee7, this, [[19, 33, 38, 41]]);
     }));
 
     return function (_x8) {
@@ -54703,32 +55041,47 @@ Context.prototype = {
   };
 
   Browser.prototype.zoomWithScaleFactor = function (scaleFactor, centerBPOrUndefined, viewportOrUndefined) {
-    if (this.loadInProgress()) {
-      return;
-    }
-
-    var self = this;
     var viewports = viewportOrUndefined ? [viewportOrUndefined] : this.trackViews[0].viewports;
-    viewports.forEach(function (viewport) {
-      var referenceFrame = viewport.genomicState.referenceFrame;
-      var chromosome = referenceFrame.getChromosome();
-      var chromosomeLengthBP = chromosome.bpLength - chromosome.bpStart;
-      var bppThreshold = scaleFactor < 1.0 ? self.minimumBases() / viewport.$viewport.width() : chromosomeLengthBP / viewport.$viewport.width();
-      var centerBP = undefined === centerBPOrUndefined ? referenceFrame.start + referenceFrame.toBP(viewport.$viewport.width() / 2.0) : centerBPOrUndefined;
-      var bpp;
+    var _iteratorNormalCompletion11 = true;
+    var _didIteratorError11 = false;
+    var _iteratorError11 = undefined;
 
-      if (scaleFactor < 1.0) {
-        bpp = Math.max(referenceFrame.bpPerPixel * scaleFactor, bppThreshold);
-      } else {
-        bpp = Math.min(referenceFrame.bpPerPixel * scaleFactor, bppThreshold);
+    try {
+      for (var _iterator11 = viewports[Symbol.iterator](), _step11; !(_iteratorNormalCompletion11 = (_step11 = _iterator11.next()).done); _iteratorNormalCompletion11 = true) {
+        var viewport = _step11.value;
+        var referenceFrame = viewport.genomicState.referenceFrame;
+        var chromosome = referenceFrame.getChromosome();
+        var chromosomeLengthBP = chromosome.bpLength - chromosome.bpStart;
+        var bppThreshold = scaleFactor < 1.0 ? this.minimumBases() / viewport.$viewport.width() : chromosomeLengthBP / viewport.$viewport.width();
+        var centerBP = undefined === centerBPOrUndefined ? referenceFrame.start + referenceFrame.toBP(viewport.$viewport.width() / 2.0) : centerBPOrUndefined;
+        var bpp = void 0;
+
+        if (scaleFactor < 1.0) {
+          bpp = Math.max(referenceFrame.bpPerPixel * scaleFactor, bppThreshold);
+        } else {
+          bpp = Math.min(referenceFrame.bpPerPixel * scaleFactor, bppThreshold);
+        }
+
+        var viewportWidthBP = bpp * viewport.$viewport.width();
+        referenceFrame.start = centerBP - viewportWidthBP / 2;
+        referenceFrame.bpPerPixel = bpp;
+        referenceFrame.clamp(viewport.$viewport.width());
+        this.updateViews(viewport.genomicState);
       }
-
-      var viewportWidthBP = bpp * viewport.$viewport.width();
-      referenceFrame.start = centerBP - viewportWidthBP / 2;
-      referenceFrame.bpPerPixel = bpp;
-      referenceFrame.clamp(viewport.$viewport.width());
-      self.updateViews(viewport.genomicState);
-    });
+    } catch (err) {
+      _didIteratorError11 = true;
+      _iteratorError11 = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion11 && _iterator11.return != null) {
+          _iterator11.return();
+        }
+      } finally {
+        if (_didIteratorError11) {
+          throw _iteratorError11;
+        }
+      }
+    }
   };
 
   Browser.prototype.presentSplitScreenMultiLocusPanel = function (alignment, genomicState) {
@@ -54844,25 +55197,25 @@ Context.prototype = {
   };
 
   Browser.prototype.emptyViewportContainers = function () {
-    var _iteratorNormalCompletion11 = true;
-    var _didIteratorError11 = false;
-    var _iteratorError11 = undefined;
+    var _iteratorNormalCompletion12 = true;
+    var _didIteratorError12 = false;
+    var _iteratorError12 = undefined;
 
     try {
-      for (var _iterator11 = this.trackViews[Symbol.iterator](), _step11; !(_iteratorNormalCompletion11 = (_step11 = _iterator11.next()).done); _iteratorNormalCompletion11 = true) {
-        var trackView = _step11.value;
+      for (var _iterator12 = this.trackViews[Symbol.iterator](), _step12; !(_iteratorNormalCompletion12 = (_step12 = _iterator12.next()).done); _iteratorNormalCompletion12 = true) {
+        var trackView = _step12.value;
 
         if (trackView.$outerScroll) {
           trackView.$outerScroll.remove();
         }
 
-        var _iteratorNormalCompletion12 = true;
-        var _didIteratorError12 = false;
-        var _iteratorError12 = undefined;
+        var _iteratorNormalCompletion13 = true;
+        var _didIteratorError13 = false;
+        var _iteratorError13 = undefined;
 
         try {
-          for (var _iterator12 = trackView.viewports[Symbol.iterator](), _step12; !(_iteratorNormalCompletion12 = (_step12 = _iterator12.next()).done); _iteratorNormalCompletion12 = true) {
-            var viewport = _step12.value;
+          for (var _iterator13 = trackView.viewports[Symbol.iterator](), _step13; !(_iteratorNormalCompletion13 = (_step13 = _iterator13.next()).done); _iteratorNormalCompletion13 = true) {
+            var viewport = _step13.value;
 
             if (viewport.rulerSweeper) {
               viewport.rulerSweeper.$rulerSweeper.remove();
@@ -54877,16 +55230,16 @@ Context.prototype = {
             viewport.$viewport.remove();
           }
         } catch (err) {
-          _didIteratorError12 = true;
-          _iteratorError12 = err;
+          _didIteratorError13 = true;
+          _iteratorError13 = err;
         } finally {
           try {
-            if (!_iteratorNormalCompletion12 && _iterator12.return != null) {
-              _iterator12.return();
+            if (!_iteratorNormalCompletion13 && _iterator13.return != null) {
+              _iterator13.return();
             }
           } finally {
-            if (_didIteratorError12) {
-              throw _iteratorError12;
+            if (_didIteratorError13) {
+              throw _iteratorError13;
             }
           }
         }
@@ -54896,16 +55249,16 @@ Context.prototype = {
         delete trackView.scrollbar;
       }
     } catch (err) {
-      _didIteratorError11 = true;
-      _iteratorError11 = err;
+      _didIteratorError12 = true;
+      _iteratorError12 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion11 && _iterator11.return != null) {
-          _iterator11.return();
+        if (!_iteratorNormalCompletion12 && _iterator12.return != null) {
+          _iterator12.return();
         }
       } finally {
-        if (_didIteratorError11) {
-          throw _iteratorError11;
+        if (_didIteratorError12) {
+          throw _iteratorError12;
         }
       }
     }
@@ -54937,7 +55290,7 @@ Context.prototype = {
     var _ref11 = _asyncToGenerator(
     /*#__PURE__*/
     regeneratorRuntime.mark(function _callee10(string, init) {
-      var self, genome, loci, genomicStateList, _iteratorNormalCompletion13, _didIteratorError13, _iteratorError13, _iterator13, _step13, gs, panelWidth, createGenomicStateList, _createGenomicStateList;
+      var self, genome, loci, genomicStateList, _iteratorNormalCompletion14, _didIteratorError14, _iteratorError14, _iterator14, _step14, gs, panelWidth, createGenomicStateList, _createGenomicStateList;
 
       return regeneratorRuntime.wrap(function _callee10$(_context10) {
         while (1) {
@@ -54947,7 +55300,7 @@ Context.prototype = {
                 _createGenomicStateList = _asyncToGenerator(
                 /*#__PURE__*/
                 regeneratorRuntime.mark(function _callee9(loci) {
-                  var searchConfig, result, _iteratorNormalCompletion14, _didIteratorError14, _iteratorError14, _iterator14, _step14, locus, genomicState, feature, chromosome, response, _genomicState, appendReferenceFrames, searchWebService, _searchWebService, processSearchResult, isLocusChrNameStartEnd;
+                  var searchConfig, result, _iteratorNormalCompletion15, _didIteratorError15, _iteratorError15, _iterator15, _step15, locus, genomicState, feature, chromosome, response, _genomicState, appendReferenceFrames, searchWebService, _searchWebService, processSearchResult, isLocusChrNameStartEnd;
 
                   return regeneratorRuntime.wrap(function _callee9$(_context9) {
                     while (1) {
@@ -55144,19 +55497,19 @@ Context.prototype = {
                           searchConfig = self.searchConfig;
                           result = []; // Try locus string first  (e.g.  chr1:100-200)
 
-                          _iteratorNormalCompletion14 = true;
-                          _didIteratorError14 = false;
-                          _iteratorError14 = undefined;
+                          _iteratorNormalCompletion15 = true;
+                          _didIteratorError15 = false;
+                          _iteratorError15 = undefined;
                           _context9.prev = 10;
-                          _iterator14 = loci[Symbol.iterator]();
+                          _iterator15 = loci[Symbol.iterator]();
 
                         case 12:
-                          if (_iteratorNormalCompletion14 = (_step14 = _iterator14.next()).done) {
+                          if (_iteratorNormalCompletion15 = (_step15 = _iterator15.next()).done) {
                             _context9.next = 35;
                             break;
                           }
 
-                          locus = _step14.value;
+                          locus = _step15.value;
                           genomicState = isLocusChrNameStartEnd(locus, self.genome);
 
                           if (!genomicState) {
@@ -55210,7 +55563,7 @@ Context.prototype = {
                           appendReferenceFrames(result);
 
                         case 32:
-                          _iteratorNormalCompletion14 = true;
+                          _iteratorNormalCompletion15 = true;
                           _context9.next = 12;
                           break;
 
@@ -55221,26 +55574,26 @@ Context.prototype = {
                         case 37:
                           _context9.prev = 37;
                           _context9.t0 = _context9["catch"](10);
-                          _didIteratorError14 = true;
-                          _iteratorError14 = _context9.t0;
+                          _didIteratorError15 = true;
+                          _iteratorError15 = _context9.t0;
 
                         case 41:
                           _context9.prev = 41;
                           _context9.prev = 42;
 
-                          if (!_iteratorNormalCompletion14 && _iterator14.return != null) {
-                            _iterator14.return();
+                          if (!_iteratorNormalCompletion15 && _iterator15.return != null) {
+                            _iterator15.return();
                           }
 
                         case 44:
                           _context9.prev = 44;
 
-                          if (!_didIteratorError14) {
+                          if (!_didIteratorError15) {
                             _context9.next = 47;
                             break;
                           }
 
-                          throw _iteratorError14;
+                          throw _iteratorError15;
 
                         case 47:
                           return _context9.finish(44);
@@ -55296,13 +55649,13 @@ Context.prototype = {
               this.genomicStateList = genomicStateList;
               this.buildViewportsWithGenomicStateList(genomicStateList); // assign ids to the state objects
 
-              _iteratorNormalCompletion13 = true;
-              _didIteratorError13 = false;
-              _iteratorError13 = undefined;
+              _iteratorNormalCompletion14 = true;
+              _didIteratorError14 = false;
+              _iteratorError14 = undefined;
               _context10.prev = 20;
 
-              for (_iterator13 = genomicStateList[Symbol.iterator](); !(_iteratorNormalCompletion13 = (_step13 = _iterator13.next()).done); _iteratorNormalCompletion13 = true) {
-                gs = _step13.value;
+              for (_iterator14 = genomicStateList[Symbol.iterator](); !(_iteratorNormalCompletion14 = (_step14 = _iterator14.next()).done); _iteratorNormalCompletion14 = true) {
+                gs = _step14.value;
                 gs.id = guid();
               }
 
@@ -55312,26 +55665,26 @@ Context.prototype = {
             case 24:
               _context10.prev = 24;
               _context10.t0 = _context10["catch"](20);
-              _didIteratorError13 = true;
-              _iteratorError13 = _context10.t0;
+              _didIteratorError14 = true;
+              _iteratorError14 = _context10.t0;
 
             case 28:
               _context10.prev = 28;
               _context10.prev = 29;
 
-              if (!_iteratorNormalCompletion13 && _iterator13.return != null) {
-                _iterator13.return();
+              if (!_iteratorNormalCompletion14 && _iterator14.return != null) {
+                _iterator14.return();
               }
 
             case 31:
               _context10.prev = 31;
 
-              if (!_didIteratorError13) {
+              if (!_didIteratorError14) {
                 _context10.next = 34;
                 break;
               }
 
-              throw _iteratorError13;
+              throw _iteratorError14;
 
             case 34:
               return _context10.finish(31);
@@ -55541,25 +55894,9 @@ Context.prototype = {
   };
 
   Browser.prototype.compressedSession = function () {
-    var json, bytes, compressedBytes, compressedString, enc;
+    var json;
     json = JSON.stringify(this.toJSON());
-    bytes = [];
-
-    for (var i = 0; i < json.length; i++) {
-      bytes.push(json.charCodeAt(i));
-    }
-
-    compressedBytes = new Zlib.RawDeflate(bytes).compress(); // UInt8Arry
-
-    compressedString = String.fromCharCode.apply(null, compressedBytes); // Convert to string
-
-    enc = btoa(compressedString);
-    enc = enc.replace(/\+/g, '.').replace(/\//g, '_').replace(/=/g, '-'); // URL safe
-    // console.log(json);
-    // console.log(compressedString);
-    // console.log(enc);
-
-    return enc;
+    return compressString(json);
   };
 
   Browser.uncompressSession = function (url) {
@@ -55568,45 +55905,36 @@ Context.prototype = {
     if (url.indexOf('/gzip;base64') > 0) {
       //Proper dataURI
       bytes = decodeDataURI(url);
+      var json = '';
+      var _iteratorNormalCompletion16 = true;
+      var _didIteratorError16 = false;
+      var _iteratorError16 = undefined;
+
+      try {
+        for (var _iterator16 = bytes[Symbol.iterator](), _step16; !(_iteratorNormalCompletion16 = (_step16 = _iterator16.next()).done); _iteratorNormalCompletion16 = true) {
+          var b = _step16.value;
+          json += String.fromCharCode(b);
+        }
+      } catch (err) {
+        _didIteratorError16 = true;
+        _iteratorError16 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion16 && _iterator16.return != null) {
+            _iterator16.return();
+          }
+        } finally {
+          if (_didIteratorError16) {
+            throw _iteratorError16;
+          }
+        }
+      }
+
+      return json;
     } else {
       var enc = url.substring(5);
-      enc = enc.replace(/\./g, '+').replace(/_/g, '/').replace(/-/g, '=');
-      var compressedString = atob(enc);
-      var compressedBytes = [];
-
-      for (var i = 0; i < compressedString.length; i++) {
-        compressedBytes.push(compressedString.charCodeAt(i));
-      }
-
-      bytes = new Zlib.RawInflate(compressedBytes).decompress();
+      return uncompressString(enc);
     }
-
-    var json = '';
-    var _iteratorNormalCompletion15 = true;
-    var _didIteratorError15 = false;
-    var _iteratorError15 = undefined;
-
-    try {
-      for (var _iterator15 = bytes[Symbol.iterator](), _step15; !(_iteratorNormalCompletion15 = (_step15 = _iterator15.next()).done); _iteratorNormalCompletion15 = true) {
-        var b = _step15.value;
-        json += String.fromCharCode(b);
-      }
-    } catch (err) {
-      _didIteratorError15 = true;
-      _iteratorError15 = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion15 && _iterator15.return != null) {
-          _iterator15.return();
-        }
-      } finally {
-        if (_didIteratorError15) {
-          throw _iteratorError15;
-        }
-      }
-    }
-
-    return json;
   };
 
   Browser.prototype.sessionURL = function () {
