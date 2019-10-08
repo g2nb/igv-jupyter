@@ -56,7 +56,6 @@ class Browser(object):
                 self.locus = data['locus']
             elif 'svg' in data:
                 self.svg = data['svg']
-                display(SVG(self.svg))
             elif 'event' in data:
                 if data['event'] in self.eventHandlers:
                     handler = self.eventHandlers[data['event']]
@@ -139,6 +138,18 @@ class Browser(object):
             "id": self.igv_id,
             "command": "loadTrack",
             "track": track
+        })
+
+    def to_svg(self):
+        """
+        Fetch the current IGV view as an SVG image and display it in this cell
+        """
+        div_id = self._gen_id();
+        display(HTML("""<div id="%s"></div>""" % div_id))
+        result = self._send({
+            "id": self.igv_id,
+            "div": div_id,
+            "command": "toSVG"
         })
 
     def get_svg(self):

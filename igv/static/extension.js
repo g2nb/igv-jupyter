@@ -81,7 +81,8 @@ define(
                             case "toSVG":
                                 try {
                                     var svg = browser.toSVG()
-
+                                    var div = document.getElementById(data.div)
+                                    div.outerHTML += svg
                                     comm.send(JSON.stringify({
                                         "svg": svg
                                     }))
