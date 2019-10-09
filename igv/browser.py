@@ -207,10 +207,8 @@ class Browser(object):
         if self.status == "ready":
             self.status = "busy"
             self.comm.send(json.dumps(msg))
-            return "OK"
         else:
             self.message_queue.append(msg)
-            return "OK"
 
     def _gen_id(self):
         return 'igv_' + str(random.randint(1, 10000000))
