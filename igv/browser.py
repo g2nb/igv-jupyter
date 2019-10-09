@@ -156,6 +156,7 @@ class Browser(object):
         """
         Fetch the current IGV view as an SVG image.  To display the message call display_svg()
         """
+        self.svg = "FETCHING"
         return self._send({
             "id": self.igv_id,
             "command": "toSVG"
@@ -166,9 +167,14 @@ class Browser(object):
         Display the current SVG image.  You must call get_svg() before calling this method.
         """
         if self.svg == None:
+            return "Must call get_svg() first"
+        elif self.svg == "FETCHING":
             return 'Awaiting SVG - try again in a few seconds'
         else:
-            display(SVG(self.svg))
+            svg = self.svg
+            self.svg == None
+            display(SVG(svg))
+
 
     def on(self, eventName, cb):
         """
