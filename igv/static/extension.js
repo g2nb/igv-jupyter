@@ -148,7 +148,8 @@ define(
                         }
 
                         function loadTrack(id, config) {
-                            var browser = getBrowser(id);
+                            var browser = getBrowser(id)
+                            config.sync = true
                             browser.loadTrack(config)
                                 .then(function (track) {
                                     comm.send('{"status": "ready"}')
