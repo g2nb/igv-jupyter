@@ -97,7 +97,7 @@ class Browser(object):
 
         """
 
-        return self._send({
+        self._send({
             "id": self.igv_id,
             "command": "search",
             "locus": locus
@@ -108,7 +108,7 @@ class Browser(object):
         Zoom in by a factor of 2
         """
 
-        return self._send({
+        self._send({
             "id": self.igv_id,
             "command": "zoomIn"
         })
@@ -117,7 +117,7 @@ class Browser(object):
         """
         Zoom out by a factor of 2
         """
-        return self._send({
+        self._send({
             "id": self.igv_id,
             "command": "zoomOut"
         })
@@ -134,7 +134,7 @@ class Browser(object):
         if isinstance(track, dict) == False:
             raise Exception("track parameter must be a dictionary")
 
-        return self._send({
+        self._send({
             "id": self.igv_id,
             "command": "loadTrack",
             "track": track
@@ -146,7 +146,7 @@ class Browser(object):
         """
         div_id = self._gen_id();
         display(HTML("""<div id="%s"></div>""" % div_id))
-        result = self._send({
+        self._send({
             "id": self.igv_id,
             "div": div_id,
             "command": "toSVG"
@@ -187,7 +187,7 @@ class Browser(object):
         :type function
         """
         self.eventHandlers[eventName] = cb
-        return self._send({
+        self._send({
             "id": self.igv_id,
             "command": "on",
             "eventName": eventName
@@ -198,7 +198,7 @@ class Browser(object):
         Remove the igv.js Browser instance from the front end.  The server Browser object should be disposed of after calling
         this method.
         """
-        return self._send({
+        self._send({
             "id": self.igv_id,
             "command": "remove"
         })
