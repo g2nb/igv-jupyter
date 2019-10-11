@@ -2,6 +2,7 @@ from IPython.display import HTML, SVG, display
 from ipykernel.comm import Comm
 import json
 import random
+import time
 
 class _IGVComm:
 
@@ -14,7 +15,7 @@ class _IGVComm:
         self.comm.send(message)
 
 
-class Browser:
+class Browser(object):
 
     # Always remember the *self* argument
     def __init__(self, config):
@@ -39,23 +40,22 @@ class Browser:
         self.igv_id = id
         self.config = config
         self.comm = _IGVComm("igvcomm")
-        self.status = "initializing"
+        self._status = "initializing"
         self.locus = None
         self.eventHandlers = {}
         self.svg = None
+        self.message_queue = []
 
         # Add a callback for received messages.
         @self.comm.comm.on_msg
         def _recv(msg):
             data = json.loads(msg['content']['data'])
-            print(json.dumps(data))
             if 'status' in data:
                 self.status = data['status']
             elif 'locus' in data:
                 self.locus = data['locus']
             elif 'svg' in data:
                 self.svg = data['svg']
-                display(SVG(self.svg))
             elif 'event' in data:
                 if data['event'] in self.eventHandlers:
                     handler = self.eventHandlers[data['event']]
@@ -64,6 +64,16 @@ class Browser:
                         eventData = data['data']
                     handler(eventData)
 
+    @property
+    def status(self):
+        return self._status
+
+    @status.setter
+    def status(self, value):
+        self._status = value
+        if value == "ready" and len(self.message_queue) > 0:
+            time.sleep(0.5)
+            self._send(self.message_queue.pop(0))
 
     def show(self):
         """
@@ -87,7 +97,7 @@ class Browser:
 
         """
 
-        return self._send({
+        self._send({
             "id": self.igv_id,
             "command": "search",
             "locus": locus
@@ -98,7 +108,7 @@ class Browser:
         Zoom in by a factor of 2
         """
 
-        return self._send({
+        self._send({
             "id": self.igv_id,
             "command": "zoomIn"
         })
@@ -107,7 +117,7 @@ class Browser:
         """
         Zoom out by a factor of 2
         """
-        return self._send({
+        self._send({
             "id": self.igv_id,
             "command": "zoomOut"
         })
@@ -124,16 +134,29 @@ class Browser:
         if isinstance(track, dict) == False:
             raise Exception("track parameter must be a dictionary")
 
-        return self._send({
+        self._send({
             "id": self.igv_id,
             "command": "loadTrack",
             "track": track
+        })
+
+    def to_svg(self):
+        """
+        Fetch the current IGV view as an SVG image and display it in this cell
+        """
+        div_id = self._gen_id();
+        display(HTML("""<div id="%s"></div>""" % div_id))
+        self._send({
+            "id": self.igv_id,
+            "div": div_id,
+            "command": "toSVG"
         })
 
     def get_svg(self):
         """
         Fetch the current IGV view as an SVG image.  To display the message call display_svg()
         """
+        self.svg = "FETCHING"
         return self._send({
             "id": self.igv_id,
             "command": "toSVG"
@@ -144,9 +167,14 @@ class Browser:
         Display the current SVG image.  You must call get_svg() before calling this method.
         """
         if self.svg == None:
-            return 'Must call get_svg() before displaying'
+            return "Must call get_svg() first"
+        elif self.svg == "FETCHING":
+            return 'Awaiting SVG - try again in a few seconds'
         else:
-            display(SVG(self.svg))
+            svg = self.svg
+            self.svg == None
+            display(SVG(svg))
+
 
     def on(self, eventName, cb):
         """
@@ -159,7 +187,7 @@ class Browser:
         :type function
         """
         self.eventHandlers[eventName] = cb
-        return self._send({
+        self._send({
             "id": self.igv_id,
             "command": "on",
             "eventName": eventName
@@ -170,19 +198,17 @@ class Browser:
         Remove the igv.js Browser instance from the front end.  The server Browser object should be disposed of after calling
         this method.
         """
-        return self._send({
+        self._send({
             "id": self.igv_id,
             "command": "remove"
         })
 
     def _send(self, msg):
-
         if self.status == "ready":
-            self.comm.send(json.dumps(msg))
             self.status = "busy"
-            return "OK"
+            self.comm.send(json.dumps(msg))
         else:
-            return "IGV Browser not ready"
+            self.message_queue.append(msg)
 
     def _gen_id(self):
         return 'igv_' + str(random.randint(1, 10000000))

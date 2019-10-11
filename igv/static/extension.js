@@ -81,7 +81,10 @@ define(
                             case "toSVG":
                                 try {
                                     var svg = browser.toSVG()
-
+                                    var div = document.getElementById(data.div)
+                                    if(div) {
+                                        div.outerHTML += svg
+                                    }
                                     comm.send(JSON.stringify({
                                         "svg": svg
                                     }))
@@ -145,7 +148,8 @@ define(
                         }
 
                         function loadTrack(id, config) {
-                            var browser = getBrowser(id);
+                            var browser = getBrowser(id)
+                            config.sync = true
                             browser.loadTrack(config)
                                 .then(function (track) {
                                     comm.send('{"status": "ready"}')
