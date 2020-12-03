@@ -13,6 +13,8 @@ Browser creation and control APIs.   Dictionaries are used for browser and track
 configuration objects.   Track data can be loaded from local or remote 
 URLs,  or supplied directly as lists of objects.
 
+*Note: This project supports classic notebooks.  For a JupyterLab enabled extension see [https://github.com/epi2me-labs/igv-jupyterlab](https://github.com/epi2me-labs/igv-jupyterlab)*.
+
 ## Installation
 
 Requirements:
