@@ -12,3 +12,4 @@ compiler.xml
 /igv.egg-info/
 /MANIFEST
 /dist
+/node_modules/

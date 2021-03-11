@@ -1,7 +1,28 @@
-include igv/static/*
-include igv/static/igvjs/*
-recursive-include igv/static *.js
-recursive-include igv/static *.css
-recursive-include igv/static *.png
-recursive-include igv/static *.svg
-recursive-include igv/static *.map
+include LICENSE.md
+include README.md
+include pyproject.toml
+include jupyter-config/igv.json
+include nbtools/igv.json
+
+include package.json
+include install.json
+
+include igv/*
+include igv/nbextension/*
+include igv/nbextension/static/*
+include igv/nbextension/static/igvjs/*
+include igv/labextension/*
+include igv/labextension/static/*
+include igv/labextension/schemas/*
+recursive-include igv/ *.js
+recursive-include igv/ *.json
+recursive-include igv/ *.txt
+recursive-include igv/ *.json.orig
+recursive-include igv/ *.map
+
+# Patterns to exclude from any directory
+global-exclude *~
+global-exclude *.pyc
+global-exclude *.pyo
+global-exclude .git
+global-exclude .ipynb_checkpoints

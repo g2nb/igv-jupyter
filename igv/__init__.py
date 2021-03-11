@@ -1,20 +1,14 @@
 from .browser import Browser
+from .nbextension import _jupyter_nbextension_paths
+from .labextension import _jupyter_labextension_paths
+from .tool import igv_tool
+from .version import __version__
+
 
 def _jupyter_server_extension_paths():
     return [{
         "module": "igv"
     }]
-
-
-def _jupyter_nbextension_paths():
-    return [dict(
-        section="notebook",
-        # the path is relative to the `igv` directory
-        src="static",
-        # directory in the `nbextension/` namespace
-        dest="igv",
-        # also_ in the `nbextension/` namespace
-        require="igv/extension")]
 
 
 def load_jupyter_server_extension(nbapp):

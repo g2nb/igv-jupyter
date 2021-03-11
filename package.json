@@ -1,0 +1,70 @@
+{
+  "name": "@igvteam/igv-jupyter",
+  "version": "0.10.0",
+  "description": "Jupyter extension for embedding the igv.js genome visualization in a notebook",
+  "keywords": [
+    "jupyter",
+    "jupyterlab",
+    "jupyterlab-extension",
+    "widgets"
+  ],
+  "files": [
+    "lib/**/*.{js,css}",
+    "nbtools/**/*.json",
+    "dist/*.{js,css}"
+  ],
+  "homepage": "https://github.com/igvteam/igv-jupyter",
+  "bugs": {
+    "url": "https://github.com/igvteam/igv-jupyter/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Thorin Tabor",
+    "email": "tmtabor@cloud.ucsd.edu"
+  },
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/igvteam/igv-jupyter"
+  },
+  "scripts": {
+    "build": "jlpm run build:labextension && jlpm run build:nbextension",
+    "build:labextension": "jupyter labextension build .",
+    "build:nbextension": "webpack --mode production",
+    "build:labextension:dev": "jupyter labextension build --development True ."
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@jupyter-widgets/base": "^4.0.0",
+    "@jupyterlab/builder": "^3.0.5",
+    "@jupyterlab/notebook": "^3.0.4",
+    "btoa": "^1.2.1"
+  },
+  "jupyterlab": {
+    "extension": "lib/plugin",
+    "schemaDir": "schema",
+    "sharedPackages": {
+      "@jupyter-widgets/base": {
+        "bundled": false,
+        "singleton": true
+      }
+    },
+    "discovery": {
+      "kernel": [
+        {
+          "kernel_spec": {
+            "language": "^python"
+          },
+          "base": {
+            "name": "nbtools"
+          },
+          "managers": [
+            "pip",
+            "conda"
+          ]
+        }
+      ]
+    },
+    "outputDir": "igv/labextension"
+  }
+}

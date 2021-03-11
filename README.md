@@ -1,25 +1,24 @@
-
 # igv Jupyter Extension
 
-[![Binder](https://beta.mybinder.org/badge.svg)](https://mybinder.org/v2/gh/igvteam/igv-jupyter/master?filepath=examples/BamFiles.ipynb)
+[![Binder](https://beta.mybinder.org/badge.svg)](https://mybinder.org/v2/gh/igvteam/igv-jupyter/jupyterlab?filepath=examples/BamFiles.ipynb)
 =======
 
 
 igv-jupyter is an extension for [Jupyter Notebook](http://jupyter.org/) which
-wraps [igv.js](https://github.com/igvteam/igv.js).  With this
+wraps [igv.js](https://github.com/igvteam/igv.js). With this
 extension you can render igv.js in a cell and call its API from
 the notebook. The extension exposes a python API that mimics the igv.js 
-Browser creation and control APIs.   Dictionaries are used for browser and track 
-configuration objects.   Track data can be loaded from local or remote 
-URLs,  or supplied directly as lists of objects.
+Browser creation and control APIs. Dictionaries are used for browser and track 
+configuration objects. Track data can be loaded from local or remote 
+URLs, or supplied directly as lists of objects.
 
-*Note: This project supports classic notebooks.  For a JupyterLab enabled extension see [https://github.com/epi2me-labs/igv-jupyterlab](https://github.com/epi2me-labs/igv-jupyterlab)*.
+*Note: This project supports classic Jupyter Notebook and JupyterLab 3.x. For a JupyterLab 1.x- or 2.x-enabled extension see [https://github.com/epi2me-labs/igv-jupyterlab](https://github.com/epi2me-labs/igv-jupyterlab)*.
 
 ## Installation
 
 Requirements:
 * python >= 3.6.4
-* jupyter >= 4.2.0
+* jupyterlab >= 3.0
 
 
 ```bash
@@ -27,12 +26,14 @@ pip install igv-jupyter
 
 # To install to configuration in your home directory
 jupyter serverextension enable --py igv
+jupyter labextension enable --py igv
 jupyter nbextension install --py igv
 jupyter nbextension enable --py igv
 
 
 # If using a virtual environment
 jupyter serverextension enable --py igv --sys-prefix
+jupyter labextension enable --py igv --sys-prefix
 jupyter nbextension install --py igv --sys-prefix
 jupyter nbextension enable --py igv --sys-prefix
 
@@ -42,15 +43,15 @@ jupyter nbextension enable --py igv --sys-prefix
 
 ### Examples
 
-Example notebooks are available in the github repository.   To download without cloning the repository use 
-this [link](https://github.com/igvteam/igv.js-jupyter/archive/master.zip).   Notebooks are available in the
+Example notebooks are available in the github repository. To download without cloning the repository use 
+this [link](https://github.com/igvteam/igv.js-jupyter/archive/master.zip). Notebooks are available in the
 "examples" directory.
 
 
 
 ### Initialization
 
-To insert an IGV instance into a cell:  
+To insert an IGV instance into a cell:
 
 (1) create an igv.Browser object,and (2) call showBrowser on the instance.
 
@@ -63,7 +64,7 @@ b = igv.Browser({"genome": "hg19"})
 ```
 
 The igv.Browser initializer takes a configuration object which is converted to JSON and passed to the igv.js
-createBrowser function.   The configuration object is described in the
+createBrowser function. The configuration object is described in the
 [igv.js documentation](https://github.com/igvteam/igv.js/wiki/Browser-Configuration-2.0).
 
 
@@ -76,7 +77,7 @@ b.show()
 
 ### Tracks
 
-To load a track pass a track configuration object to load_track().  Track configuration
+To load a track pass a track configuration object to load_track(). Track configuration
 objects are described in the [igv.js documentation](https://github.com/igvteam/igv.js/wiki/Tracks-2.0).
 The configuration object will be converted to JSON and passed to the igv.js browser
 instance.
@@ -100,7 +101,7 @@ b.load_track(
 #### Local File
 
 Tracks can be loaded from local files using the Jupyter web server by prepending "files" to the path.  The path
-is relative to the notebook file.  
+is relative to the notebook file.
 
 ```python
 b.load_track(
@@ -164,7 +165,7 @@ b.search('chr1:3000-4000')
 
 ```
 
-Jump to a specific gene.  This uses the IGV search web service, which currently supports a limited number of genomes:  hg38, hg19, and mm10.
+Jump to a specific gene. This uses the IGV search web service, which currently supports a limited number of genomes:  hg38, hg19, and mm10.
 To configure a custom search service see the [igv.js documentation](https://github.com/igvteam/igv.js/wiki/Browser-Configuration-2.0#search-object-details)
 
 ```python
@@ -174,7 +175,7 @@ b.search('myc')
 
 ### SVG output
 
-Saving the current IGV view as an SVG image requires two calls.  
+Saving the current IGV view as an SVG image requires two calls.
 
 ```python
 b.get_svg()
@@ -208,9 +209,9 @@ To build and install from source:
 ```bash
 python setup.py build
 pip install -e .
-jupyter nbextension install --py igv
+jupyter labextension develop . --overwrite
+jupyter nbextension install --py igv --symlink
 jupyter nbextension enable --py igv
-
 ```
 
 Creating a conda environment
