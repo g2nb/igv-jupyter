@@ -57,7 +57,7 @@ long_description = (HERE / "README.md").read_text()
 pkg_json = json.loads((HERE / "package.json").read_bytes())
 
 setup_args = dict(
-    name=name,
+    name='igv-jupyter',
     version=pkg_json["version"],
     url=pkg_json["homepage"],
     author=pkg_json["author"]["name"],
