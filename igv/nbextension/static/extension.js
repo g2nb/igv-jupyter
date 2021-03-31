@@ -148,7 +148,8 @@ define(
                         }
 
                         function is_local(url) {
-                            const regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+                            if (url.startsWith('data:')) return false;  // Special case for embedded data URLs
+                            const regexp = /(ftp|http|https|gs):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
                             return !regexp.test(url);
                         }
 
