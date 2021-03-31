@@ -214,6 +214,12 @@ jupyter nbextension install --py igv --symlink
 jupyter nbextension enable --py igv
 ```
 
+After source changes, the extension can be rebuilt using:
+
+```bash
+jupyter labextension build .
+```
+
 Creating a conda environment
 ```bash
 conda create -n test python=3.7.1

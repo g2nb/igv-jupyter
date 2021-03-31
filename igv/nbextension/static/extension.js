@@ -147,8 +147,29 @@ define(
                                 })
                         }
 
+                        function is_local(url) {
+                            const regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+                            return !regexp.test(url);
+                        }
+
+                        function download_url(url) {
+                            return `files/${url}`;
+                        }
+
+                        function prepare_urls(config) {
+                            const to_check = ['url', 'indexURL', 'fastaURL', 'cytobandURL'];
+                            for (const param of to_check) {
+                                const url = config[param];
+                                if (!url) return;  // If this param is not defined, skip
+                                if (is_local(url)) {
+                                    config[param] = download_url(url);
+                                }
+                            }
+                        }
+
                         function loadTrack(id, config) {
                             var browser = getBrowser(id)
+                            prepare_urls(config);
                             config.sync = true
                             browser.loadTrack(config)
                                 .then(function (track) {
