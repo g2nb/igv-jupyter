@@ -98,14 +98,11 @@ b.load_track(
 
 #### Local File
 
-Tracks can be loaded from local files using the Jupyter web server by prepending "files" to the path.  The path
-is relative to the notebook file.
-
 ```python
 b.load_track(
     {
         "name": "Local VCF",
-        "url": "files/data/example.vcf",
+        "url": "data/example.vcf",
         "format": "vcf",
         "type": "variant",
         "indexed": False
