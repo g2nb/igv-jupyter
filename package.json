@@ -1,6 +1,6 @@
 {
   "name": "@igvteam/igv-jupyter",
-  "version": "0.10.0",
+  "version": "0.10.0-beta.0",
   "description": "Jupyter extension for embedding the igv.js genome visualization in a notebook",
   "keywords": [
     "jupyter",
@@ -36,9 +36,16 @@
   "dependencies": {},
   "devDependencies": {
     "@jupyter-widgets/base": "^4.0.0",
+    "@jupyterlab/apputils": "^3.0.3",
     "@jupyterlab/builder": "^3.0.5",
     "@jupyterlab/notebook": "^3.0.4",
-    "btoa": "^1.2.1"
+    "btoa": "^1.2.1",
+    "css-loader": "^5.0.2",
+    "file-loader": "^6.2.0",
+    "process": "0.11.10",
+    "source-map-loader": "^2.0.1",
+    "style-loader": "^2.0.0",
+    "ts-loader": "^8.0.17"
   },
   "jupyterlab": {
     "extension": "lib/plugin",

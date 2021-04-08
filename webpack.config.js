@@ -3,14 +3,18 @@ const webpack = require('webpack');
 const version = require('./package.json').version;
 
 // Custom webpack rules
-const rules = [];
+const rules = [
+  { test: /\.ts$/, loader: 'ts-loader' },
+  { test: /\.js$/, loader: 'source-map-loader' },
+  { test: /\.css$/i, use: ['style-loader', 'css-loader'] },
+  { test: /\.(png|svg|jpg)$/i, use: ['file-loader'] }
+];
 
 // Packages that shouldn't be bundled but loaded at runtime
 const externals = ['@jupyter-widgets/base'];
 
 const resolve = {
-  // Add '.ts' and '.tsx' as resolvable extensions.
-  extensions: [".webpack.js", ".web.js", ".js"]
+  extensions: [".webpack.js", ".web.js", ".js", ".css"]
 };
 
 module.exports = [
@@ -32,6 +36,7 @@ module.exports = [
     module: {
       rules: rules
     },
+    devtool: 'source-map',
     externals,
     resolve,
     plugins: [
@@ -65,6 +70,7 @@ module.exports = [
     module: {
         rules: rules
     },
+    devtool: 'source-map',
     externals,
     resolve,
     plugins: [
