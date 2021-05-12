@@ -1,6 +1,6 @@
 {
   "name": "@igvteam/igv-jupyter",
-  "version": "0.10.0-beta.0",
+  "version": "0.10.0",
   "description": "Jupyter extension for embedding the igv.js genome visualization in a notebook",
   "keywords": [
     "jupyter",
