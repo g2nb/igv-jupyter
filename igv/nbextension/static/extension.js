@@ -168,6 +168,19 @@ define(
                             }
                         }
 
+                        function loadROI(id, roi) {
+                            const browser = getBrowser(id);
+                            browser.loadROI([roi])
+                                .then(function (track) {
+                                    comm.send('{"status": "ready"}')
+                                })
+                                .catch(function (error) {
+                                    comm.send('{"status": "ready"}');
+                                    alert(error.message);
+                                    console.error(e)
+                                });
+                        }
+
                         function loadTrack(id, config) {
                             var browser = getBrowser(id)
                             prepare_urls(config);

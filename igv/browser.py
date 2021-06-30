@@ -175,6 +175,15 @@ class Browser(object):
             self.svg == None
             display(SVG(svg))
 
+    def roi(self, roi):
+        """
+        Specify a region of interest for all tracks
+        """
+        return self._send({
+            "id": self.igv_id,
+            "command": "loadROI",
+            "roi": roi
+        })
 
     def on(self, eventName, cb):
         """
