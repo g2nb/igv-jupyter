@@ -35,6 +35,10 @@ define(
                                 createBrowser(div, data.options, comm)
                                 break
 
+                            case "loadROI":
+                                loadROI(id, data.roi);
+                                break;
+
                             case "loadTrack":
                                 loadTrack(id, data.track)
                                 break
