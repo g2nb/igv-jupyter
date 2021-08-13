@@ -23,6 +23,7 @@
     "email": "tmtabor@cloud.ucsd.edu"
   },
   "main": "lib/index.js",
+  "style": "lib/index.css",
   "repository": {
     "type": "git",
     "url": "https://github.com/igvteam/igv-jupyter"
@@ -33,7 +34,10 @@
     "build:nbextension": "webpack --mode production",
     "build:labextension:dev": "jupyter labextension build --development True ."
   },
-  "dependencies": {},
+  "dependencies": {
+    "tapable": "^2.2.0",
+    "webpack": "^5.24.4"
+  },
   "devDependencies": {
     "@jupyter-widgets/base": "^4.0.0",
     "@jupyterlab/apputils": "^3.0.3",
