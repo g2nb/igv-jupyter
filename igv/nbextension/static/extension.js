@@ -1,5 +1,3 @@
-// Entry point for the notebook bundle containing custom model definitions.
-//
 define(function () {
     "use strict";
 
@@ -23,16 +21,14 @@ define(function () {
         }
     });
 
-    // Load the toolbox
-    require(['@igvteam/igv-jupyter'], function(igv) {
-        console.log('igv-jupyter loaded');
-        window.igv = igv;
-        console.log(igv);
-    });
-
     // Export the required load_ipython_extension function
     return {
         load_ipython_extension: function () {
+            // Load igv-jupyter comm
+            require(['@igvteam/igv-jupyter'], function(igv) {
+                console.log('igv-jupyter nbextension loaded');
+                igv.init_comm_nb();
+            });
         }
     };
 });
