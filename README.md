@@ -1,6 +1,6 @@
 # igv Jupyter Extension
 
-[![Binder](https://beta.mybinder.org/badge.svg)](https://mybinder.org/v2/gh/igvteam/igv-jupyter/jupyterlab?filepath=examples/BamFiles.ipynb)
+[![Binder](https://beta.mybinder.org/badge.svg)](https://mybinder.org/v2/gh/igvteam/igv-jupyter/master?filepath=examples/BamFiles.ipynb)
 =======
 
 
