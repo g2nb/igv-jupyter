@@ -1,0 +1,122 @@
+ /* Navbar container */
+.igv-darkbar {
+  overflow: hidden;
+  background-color: #5f5f5f;
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  height: 48px;
+}
+
+/* Links inside the navbar */
+.igv-navbar a:link {
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 12px 16px 16px 16px;
+  text-decoration: none;
+}
+
+.igv-navbar a:visited,
+.igv-navbar a:active {
+  color: white;
+}
+
+/* The dropdown container */
+.igv-dropdown {
+  float: left;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Dropdown button */
+.igv-dropdown .igv-dropdown-button {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  cursor: pointer;
+  font-family: inherit;
+  margin: 0;
+}
+
+.igv-navbar i {
+  margin-left: 5px;
+}
+
+.igv-navbar a:hover,
+.igv-dropdown:hover .igv-dropdown-button {
+  color: #dfdfdf;
+}
+
+/* Dropdown content (hidden by default) */
+.igv-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  z-index: 200;
+  top: 48px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* Links inside the dropdown */
+.igv-dropdown-content a:link {
+  float: none;
+  color: #5f5f5f;
+  padding: 4px 12px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.igv-dropdown-content a:visited,
+.igv-dropdown-content a:active {
+  color: #5f5f5f;
+}
+
+/* Add a grey background color to dropdown links on hover */
+.igv-dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.igv-dropdown:hover .igv-dropdown-content {
+  display: block;
+}
+
+
+/* Dialog styles */
+
+.igv-dialog {
+  display: none;
+  position: absolute;
+  top: calc(50% - 100px);
+  width: 50%;
+  min-width: 400px;
+  max-width: 1000px;
+}
+
+.igv-dialog label {
+  width: 100px;
+  display: inline-block;
+  font-weight: bold;
+}
+
+.igv-dialog input {
+  display: inline-block;
+  width: calc(100% - 120px);
+  margin-bottom: 5px;
+}
+
+.igv-dialog-footer {
+  margin-top: 10px;
+  text-align: right;
+}
+
+.igv-dialog-footer > button {
+  cursor: pointer;
+}
