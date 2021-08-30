@@ -72,7 +72,7 @@ class Browser(object):
 
     def show(self):
         """Create an igv.js "Browser" instance on the front end."""
-        display(HTML(f"""<div id="{self.igv_id}"></div>"""))
+        display(HTML(f"""<div class="igv-navbar"></div><div id="{self.igv_id}"></div>"""))
 
         # DON'T check status before showing browser,
         msg = json.dumps({
