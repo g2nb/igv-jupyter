@@ -1,5 +1,5 @@
  /* Navbar container */
-.igv-navbar {
+.igv-darkbar {
   overflow: hidden;
   background-color: #5f5f5f;
   font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
@@ -36,8 +36,9 @@
   color: white;
   padding: 14px 16px;
   background-color: inherit;
-  font-family: inherit; /* Important for vertical align on mobile phones */
-  margin: 0; /* Important for vertical align on mobile phones */
+  cursor: pointer;
+  font-family: inherit;
+  margin: 0;
 }
 
 .igv-navbar i {
@@ -55,8 +56,11 @@
   position: absolute;
   background-color: #f9f9f9;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  z-index: 200;
+  top: 48px;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 /* Links inside the dropdown */
@@ -82,4 +86,37 @@
 /* Show the dropdown menu on hover */
 .igv-dropdown:hover .igv-dropdown-content {
   display: block;
+}
+
+
+/* Dialog styles */
+
+.igv-dialog {
+  display: none;
+  position: absolute;
+  top: calc(50% - 100px);
+  width: 50%;
+  min-width: 400px;
+  max-width: 1000px;
+}
+
+.igv-dialog label {
+  width: 100px;
+  display: inline-block;
+  font-weight: bold;
+}
+
+.igv-dialog input {
+  display: inline-block;
+  width: calc(100% - 120px);
+  margin-bottom: 5px;
+}
+
+.igv-dialog-footer {
+  margin-top: 10px;
+  text-align: right;
+}
+
+.igv-dialog-footer > button {
+  cursor: pointer;
 }
