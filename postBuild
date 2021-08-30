@@ -1,5 +1,5 @@
-pip install .
+pip install igv-jupyter
 jupyter serverextension enable igv --sys-prefix
-jupyter labextension install .
+jupyter labextension install --py igv
 jupyter nbextension install --py igv --sys-prefix
 jupyter nbextension enable --py igv --sys-prefix
