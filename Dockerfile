@@ -40,6 +40,14 @@ RUN pip install igv-jupyter && jupyter lab build
 
 #############################################
 ##  $NB_USER                               ##
+##      Add all example notebooks          ##
+#############################################
+
+RUN mkdir /home/jovyan/examples
+COPY ./examples /home/jovyan/examples
+
+#############################################
+##  $NB_USER                               ##
 ##      Launch lab by default              ##
 #############################################
 
