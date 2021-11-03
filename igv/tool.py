@@ -15,8 +15,19 @@ except ImportError:
 @build_ui(name="igv.js: Integrative Genomics Viewer",
           description="Use igv.js to embed an interactive genome visualization",
           logo="http://igv.org/web/img/favicon.ico",
-          origin="igv",
+          origin="+",
           run_label="Visualize",
+          parameter_groups=[
+              {
+                  "name": "Basic Parameters",
+                  "parameters": ["genome", "tracks", "indices", "locus"],
+              },
+              {
+                  "name": "Advanced Parameters",
+                  "parameters": ["track_format", "track_type"],
+                  "hidden": True
+              }
+          ],
           parameters={
               "genome": {
                   "name": "genome",
