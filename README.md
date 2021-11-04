@@ -24,14 +24,14 @@ pip install igv-jupyter
 
 # To install to configuration in your home directory
 jupyter serverextension enable --py igv
-jupyter labextension enable --py igv
+jupyter labextension enable igv
 jupyter nbextension install --py igv
 jupyter nbextension enable --py igv
 
 
 # If using a virtual environment
 jupyter serverextension enable --py igv --sys-prefix
-jupyter labextension enable --py igv --sys-prefix
+jupyter labextension enable igv --sys-prefix
 jupyter nbextension install --py igv --sys-prefix
 jupyter nbextension enable --py igv --sys-prefix
 
