@@ -12,7 +12,7 @@ except ImportError:
         return decorator
 
 
-@build_ui(name="igv.js: Integrative Genomics Viewer",
+@build_ui(name="Integrative Genomics Viewer (IGV)",
           description="Use igv.js to embed an interactive genome visualization",
           logo="http://igv.org/web/img/favicon.ico",
           origin="+",
@@ -25,7 +25,8 @@ except ImportError:
               {
                   "name": "Advanced Parameters",
                   "parameters": ["track_format", "track_type"],
-                  "hidden": True
+                  "hidden": True,
+                  "advanced": True
               }
           ],
           parameters={
