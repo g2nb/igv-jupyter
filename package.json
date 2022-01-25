@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "tapable": "^2.2.0",
-    "webpack": "^5.24.4"
+    "webpack": "^5.67.0"
   },
   "devDependencies": {
     "@jupyter-widgets/base": "^4.0.0",
@@ -49,7 +49,8 @@
     "process": "0.11.10",
     "source-map-loader": "^2.0.1",
     "style-loader": "^2.0.0",
-    "ts-loader": "^8.0.17"
+    "ts-loader": "^8.0.17",
+    "webpack-cli": "^4.9.2"
   },
   "jupyterlab": {
     "extension": "lib/plugin",

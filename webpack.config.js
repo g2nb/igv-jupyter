@@ -41,7 +41,7 @@ module.exports = [
     resolve,
     plugins: [
         new webpack.ProvidePlugin({
-            process: 'process/browser',
+            process: 'process/browser.js',
         }),
     ],
   },
@@ -75,7 +75,7 @@ module.exports = [
     resolve,
     plugins: [
         new webpack.ProvidePlugin({
-            process: 'process/browser',
+            process: 'process/browser.js',
         }),
     ],
   },
