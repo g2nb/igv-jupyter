@@ -136,8 +136,8 @@ def igv_tool(genome, tracks=None, indices=None, track_format=None, track_type=No
     browser.show(navbar=True)
 
     # Ensure tracks and indices are represented as lists
-    if tracks is None: tracks = []
-    if indices is None: indices = []
+    if not tracks: tracks = []
+    if not indices: indices = []
     if type(tracks) == str: tracks = [tracks]
     if type(indices) == str: indices = [indices]
 
