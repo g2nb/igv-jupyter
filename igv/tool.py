@@ -17,6 +17,7 @@ except ImportError:
           logo="http://igv.org/web/img/favicon.ico",
           origin="+",
           run_label="Visualize",
+          color='#4a8797',
           parameter_groups=[
               {
                   "name": "Basic Parameters",
