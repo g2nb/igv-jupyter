@@ -70,9 +70,12 @@ class Browser(object):
             time.sleep(0.5)
             self._send(self.message_queue.pop(0))
 
-    def show(self):
+    def show(self, navbar=False):
         """Create an igv.js "Browser" instance on the front end."""
-        display(HTML(f"""<div class="igv-navbar"></div><div id="{self.igv_id}"></div>"""))
+        if navbar: navbar_html = '<div class="igv-navbar"></div>'
+        else: navbar_html = ''
+
+        display(HTML(f"""{navbar_html}<div id="{self.igv_id}"></div>"""))
 
         # DON'T check status before showing browser,
         msg = json.dumps({

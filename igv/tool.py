@@ -132,7 +132,7 @@ except ImportError:
 def igv_tool(genome, tracks=None, indices=None, track_format=None, track_type=None, locus=None):
     # Create the genome browser and display it
     browser = Browser({"genome": genome, "locus": locus})
-    browser.show()
+    browser.show(navbar=True)
 
     # Ensure tracks and indices are represented as lists
     if tracks is None: tracks = []
