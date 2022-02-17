@@ -26,7 +26,7 @@ except ImportError:
               {
                   "name": "Advanced Parameters",
                   "parameters": ["track_format", "track_type"],
-                  "hidden": True,
+                  "hidden": False,
                   "advanced": True
               }
           ],
