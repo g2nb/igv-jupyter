@@ -10,7 +10,7 @@
 
 # How to Deploy to PyPi Test
 
-1. Make sure setup.py and igv.__version__ are updated.
+1. Make sure the version in package.json updated.
 2. Navigate to the correct directory:
 > cd igv-jupyter
 3. Upload the files by running:
