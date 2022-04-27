@@ -1,42 +1,27 @@
 # Dockerfile for running igv-jupyter from a pip install
 
 # Pull the latest known good scipy notebook image from the official Jupyter stacks
-FROM jupyter/scipy-notebook:2021-08-16
+FROM jupyter/scipy-notebook:2022-02-17
 
 MAINTAINER Thorin Tabor <tmtabor@cloud.ucsd.edu>
 EXPOSE 8888
 
 #############################################
-##  ROOT                                   ##
-##      Install npm                        ##
-#############################################
-
-USER root
-
-RUN apt-get update && apt-get install -y npm
-
-#############################################
 ##  $NB_USER                               ##
-##      Install python libraries           ##
+##      Install dependencies               ##
 #############################################
 
-USER $NB_USER
-
-RUN conda install -c conda-forge jupyterlab=3.1
-
-#############################################
-##  $NB_USER                               ##
-##      Install nbtools                    ##
-#############################################
-
-RUN pip install nbtools==21.9.0b1
+RUN pip install nbtools==22.3.0b2 igv-notebook
 
 #############################################
 ##  $NB_USER                               ##
 ##      Install nbtools igv-jupyter        ##
 #############################################
 
-RUN pip install igv-jupyter && jupyter lab build
+RUN pip install igv-jupyter
+
+# RUN git clone https://github.com/g2nb/igv-jupyter.git
+# RUN cd igv-jupyter && pip install -e .
 
 #############################################
 ##  $NB_USER                               ##

@@ -1,6 +1,4 @@
-import './menu.css';
-import igv from "./igv";
-import igv_jupyter from "../package.json";
+const VERSION = '2.0.0';
 
 class Menu {
     /**
@@ -15,7 +13,7 @@ class Menu {
     /**
      * Initialize a specific igv-jupyter menu
      *
-     * @param div - menu node to initialize
+     * @param navbar - menu node to initialize
      */
     static render(navbar) {
         navbar.classList.add('igv-navbar-rendered');
@@ -108,7 +106,7 @@ class Menu {
 
     static igv_from_event(event) {
         const igv_node = event.target.closest('.igv-navbar').parentNode.lastChild;
-        return igv.browserCache[igv_node.id];
+        return window.igv.browserCache[igv_node.id];
     }
 }
 
@@ -317,8 +315,9 @@ class HelpMenu {
     }
 
     static about() {
-        alert(`igv-jupyter Version ${igv_jupyter.version}\nigv.js Version ${igv.version()}`);
+        alert(`igv-jupyter Version ${VERSION}\nigv.js Version ${window.igv.version()}`);
     }
 }
 
-export default Menu;
+// Create the menu
+Menu.init();

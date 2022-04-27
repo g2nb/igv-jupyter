@@ -1,6 +1,9 @@
-from .browser import Browser
+import igv_notebook
 from urllib.parse import urlparse
 from os.path import basename
+from IPython import get_ipython
+from .navbar import show_navbar
+
 
 # Attempt to import nbtools, if it's not installed create a dummy decorator that does nothing
 try:
@@ -131,9 +134,13 @@ except ImportError:
               }
           })
 def igv_tool(genome, tracks=None, indices=None, track_format=None, track_type=None, locus=None):
+    # Create the navbar
+    show_navbar()
+
     # Create the genome browser and display it
-    browser = Browser({"genome": genome, "locus": locus})
-    browser.show(navbar=True)
+    igv_notebook.file_reader.get_ipython = get_ipython  # Workaround for a bug in igv_notebook
+    igv_notebook.init()
+    browser = igv_notebook.Browser({"genome": genome, "locus": locus})
 
     # Ensure tracks and indices are represented as lists
     if not tracks: tracks = []
