@@ -105,8 +105,8 @@ class Menu {
     }
 
     static igv_from_event(event) {
-        const igv_node = event.target.closest('.igv-navbar').parentNode.lastChild;
-        return window.igv.browserCache[igv_node.id];
+        const igv_node = event.target.closest('.jp-Cell-outputArea').querySelector('.igv-container').parentNode;
+        return window.igv.MessageHandler.browserCache.get(igv_node.id)
     }
 }
 
@@ -307,7 +307,7 @@ class SVGMenu {
 
 class HelpMenu {
     static github() {
-        window.open('https://github.com/igvteam/igv-jupyter');
+        window.open('https://github.com/g2nb/igv-jupyter');
     }
 
     static forum() {

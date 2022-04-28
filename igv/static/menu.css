@@ -1,5 +1,6 @@
  /* Navbar container */
 .igv-darkbar {
+  display: block;
   overflow: hidden;
   background-color: #4a8797;
   font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
