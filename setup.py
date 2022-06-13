@@ -38,6 +38,7 @@ setup_args = dict(
         "Programming Language :: Python :: 3.9",
         "Framework :: Jupyter",
     ],
+    data_files=[("share/jupyter/nbtools", ["nbtools/igv.json"])],
     package_data={'igv': ['static/menu.js', 'static/menu.css']},
 )
 
