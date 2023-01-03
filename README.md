@@ -4,8 +4,8 @@
 =======
 
 
-igv-jupyter is tool for [JupyterLab](http://jupyter.org/) which wraps [igv.js](https://github.com/igvteam/igv.js) and
-integrates with [g2nb](https://github.com/g2nb/g2nb). With this tool you can render igv.js in a cell and call its API
+igv-jupyter is tool for [JupyterLab](http://jupyter.org/) which wraps [igv.js](https://github.com/igvteam/igv.js) by way of [igv-notebook](https://github.com/igvteam/igv-notebook), and
+which integrates with [g2nb](https://github.com/g2nb/g2nb). With this tool you can render IGV in a cell and call its API
 from a user-friendly web form in the notebook. Track data can be loaded from local or remote URLs, or supplied directly.
 
 For programmatic access to igv.js in a Jupyter notebook, see [igv-notebook](https://github.com/igvteam/igv-notebook).
