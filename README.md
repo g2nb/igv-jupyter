@@ -1,8 +1,9 @@
+> ⚠️ This tool has been retired. Please use [igv-notebook](https://github.com/igvteam/igv-notebook) instead.
+
 # igv Jupyter Extension
 
 [![Binder](https://beta.mybinder.org/badge.svg)](https://mybinder.org/v2/gh/g2nb/igv-jupyter/master)
 =======
-
 
 igv-jupyter is tool for [JupyterLab](http://jupyter.org/) which wraps [igv.js](https://github.com/igvteam/igv.js) by way of [igv-notebook](https://github.com/igvteam/igv-notebook), and
 which integrates with [g2nb](https://github.com/g2nb/g2nb). With this tool you can render IGV in a cell and call its API
