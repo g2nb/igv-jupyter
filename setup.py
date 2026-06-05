@@ -17,7 +17,7 @@ setup_args = dict(
     long_description=long_description,
     long_description_content_type="text/markdown",
     install_requires=[
-        "jupyterlab~=3.0",
+        "jupyterlab>=3.0",
         "ipywidgets>=7.0.0",
         "igv-notebook",
     ],
